@@ -19,8 +19,14 @@ export const HeaderNavigation: React.FC<HeaderNavigationProps> = ({mobileMenuIsO
 	const [profileIsOpen, setProfileIsOpen] = useState<boolean>(false)
 	
 	return (
-		<NavigationContainer isopen={mobileMenuIsOpen}>
-			<NavigationInner isopen={mobileMenuIsOpen}>
+		<NavigationContainer
+			isopen={mobileMenuIsOpen}
+			onClick={() => setMobileMenuIsOpen(false)}
+		>
+			<NavigationInner
+				isopen={mobileMenuIsOpen}
+				onClick={(e) => e.stopPropagation()}
+			>
 				<MobileNavigation>
 					<MobileClose
 						src={CloseIcon}

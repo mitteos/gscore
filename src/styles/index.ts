@@ -1,2 +1,1 @@
-export {typography} from "./typography"
-export {appColors} from "./appColors"
+export {typography, appColors} from "./presets"

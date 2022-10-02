@@ -14,11 +14,14 @@ interface BenefitItemProps {
 export const BenefitItem: React.FC<BenefitItemProps> = ({benefit, accent}) => {
 	return (
 		<BenefitWrapper>
-			<Image
-				src={accent ? CheckAccentIcon : CheckIcon}
-				width={26}
-				height={26}
-				layout="fixed"/>
+			<BenefitImageContainer>
+				<Image
+					src={accent ? CheckAccentIcon : CheckIcon}
+					width={26}
+					height={26}
+					layout="fixed"
+				/>
+			</BenefitImageContainer>
 			<BenefitText>{benefit.text}</BenefitText>
 		</BenefitWrapper>
 	)
@@ -28,6 +31,9 @@ const BenefitWrapper = styled.div`
 	display: flex;
 	align-items: center;
 	gap: 14px;
+`
+const BenefitImageContainer = styled.div`
+	flex-shrink: 0;
 `
 const BenefitText = styled.p`
   ${typography.single200Regular};

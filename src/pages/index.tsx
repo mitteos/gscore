@@ -1,8 +1,7 @@
 import styled from "styled-components"
 import { CardList } from "components/Card"
 import Link from "next/link"
-import { appColors } from "styles/appColors"
-import { typography } from "styles/typography"
+import { appColors, typography } from "styles"
 
 const Home = () => {
 	return (

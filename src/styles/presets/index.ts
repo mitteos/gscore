@@ -1,2 +1,2 @@
-export {typography} from "./typography"
-export {appColors} from "./appColors"
+export { TYPOGRAPHY } from "./typography"
+export { APP_COLORS } from "./appColors"

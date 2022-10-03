@@ -3,7 +3,7 @@ import { CheckIcon, CheckAccentIcon } from "assets/svg"
 import React from "react"
 import styled from "styled-components"
 import { BenefitsState } from "components/Card/types"
-import { typography } from "styles"
+import { TYPOGRAPHY } from "styles"
 
 interface BenefitItemProps {
 	benefit: BenefitsState;
@@ -35,8 +35,8 @@ const BenefitImageContainer = styled.div`
 	flex-shrink: 0;
 `
 const BenefitText = styled.p`
-  ${typography.single200Regular};
+  ${TYPOGRAPHY.single200Regular};
   @media (max-width: 1200px) {
-    ${typography.single100Regular}
+    ${TYPOGRAPHY.single100Regular}
   }
 `

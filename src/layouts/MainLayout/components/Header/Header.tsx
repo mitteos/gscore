@@ -2,7 +2,7 @@ import styled from "styled-components"
 import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
-import { HeaderNavigation } from "layouts/MainLayout"
+import { HeaderNavigation } from "layouts/MainLayout/components"
 import { LogoIcon, MobileMenuIcon } from "assets/svg"
 
 export const Header = () => {

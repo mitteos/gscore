@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import styled from "styled-components"
 import Link from "next/link"
 import Image from "next/image"
-import { appColors, typography } from "styles"
+import { APP_COLORS, TYPOGRAPHY } from "styles"
 import { LowArrowIcon, SettingsIcon, LogoutIcon, CloseIcon, LogoIcon } from "assets/svg"
 
 interface HeaderNavigationProps {
@@ -90,7 +90,7 @@ const NavigationInner = styled.div<{$isOpen: boolean}>`
 		width: 69%;
     height: 100%;
     flex-direction: column;
-		background: ${appColors.neutral700};
+		background: ${APP_COLORS.neutral700};
 		align-items: flex-start;
     gap: 0;
 		padding: 28px 24px;
@@ -113,25 +113,25 @@ const MobileClose = styled(Image)`
 const HeaderLine = styled.div`
 	display: none;
 	width: 100%;
-	border: 1px solid ${appColors.neutral600};
+	border: 1px solid ${APP_COLORS.neutral600};
 	margin: 20px 0;
   @media (max-width: 600px) {
 		display: block;
   }
 `
 const HeaderLink = styled.a`
-	${typography.single300Regular}
+	${TYPOGRAPHY.single300Regular}
 	text-decoration: none;
 	cursor: pointer;
 	z-index: 1;
   @media (max-width: 600px) {
-    ${typography.single100Regular}
+    ${TYPOGRAPHY.single100Regular}
   }
 `
 const HeaderText = styled.div`
-  ${typography.single300Regular};
+  ${TYPOGRAPHY.single300Regular};
   @media (max-width: 600px) {
-  	${typography.single100Regular}
+  	${TYPOGRAPHY.single100Regular}
 	}
 `
 const ProfileContainer = styled.div`
@@ -155,7 +155,7 @@ const ProfileNavigation = styled.div<{$isOpen: boolean}>`
 	bottom: -29px;
 	right: 0;
 	padding: 30px 26px;
-	background: ${appColors.neutral700};
+	background: ${APP_COLORS.neutral700};
 	border-radius: 12px;
 	transition: all .3s ease;
 	z-index: 0;

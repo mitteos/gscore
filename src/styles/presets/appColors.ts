@@ -1,4 +1,4 @@
-export const appColors = {
+export const APP_COLORS = {
 	accent: "#FC5842",
 	secondaryDark: "#D1311C",
 	secondaryLight: "#FFF0EE",

@@ -1,6 +1,6 @@
 import { css } from "styled-components"
 
-export const typography = {
+export const TYPOGRAPHY = {
 	specialHeading1: css`
 		font-weight: 700;
 		font-size: 78px;

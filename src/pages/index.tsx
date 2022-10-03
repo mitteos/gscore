@@ -1,13 +1,14 @@
-import styled from "styled-components"
-import { CardList } from "components/Card"
-import Link from "next/link"
-import { appColors, typography } from "styles"
-import { HeadComponent, LayoutWrapper } from "layouts/MainLayout"
 import React from "react"
+import styled from "styled-components"
+import Link from "next/link"
+import { APP_COLORS, TYPOGRAPHY } from "styles"
+import { MainLayout } from "layouts"
+import { CardList } from "components/Card"
+import { HeadComponent } from "components/HeadComponent"
 
 const Home = () => {
 	return (
-		<LayoutWrapper>
+		<MainLayout>
 			<HeadComponent title="Gscore" />
 			<Title>Get started with Gscore today!</Title>
 			<Container>
@@ -19,7 +20,7 @@ const Home = () => {
 					</Link>
 				</AdditionLink>
 			</Container>
-		</LayoutWrapper>
+		</MainLayout>
 	)
 }
 export default Home
@@ -30,11 +31,11 @@ const Container = styled.div`
 	margin: 0 auto;
 `
 const Title = styled.h1`
-	${typography.specialHeading3}
+	${TYPOGRAPHY.specialHeading3}
 	text-align: center;
 	margin: 0 0 98px;
   @media (max-width: 1200px) {
-    ${typography.specialHeading4}
+    ${TYPOGRAPHY.specialHeading4}
   }
   @media (max-width: 900px) {
     margin: 0 0 40px;
@@ -48,7 +49,7 @@ const Title = styled.h1`
 `
 const AdditionTitle = styled.h1`
 	text-align: center;
-  ${typography.paragraphDefault}
+  ${TYPOGRAPHY.paragraphDefault}
 	margin: 0 0 1px;
 `
 const AdditionLink = styled.div`
@@ -57,8 +58,8 @@ const AdditionLink = styled.div`
 `
 const AdditionLinkInner = styled.a`
 	text-align: center;
-  ${typography.paragraphDefault}
+  ${TYPOGRAPHY.paragraphDefault}
   cursor: pointer;
 	text-decoration: underline;
-	color: ${appColors.accent};
+	color: ${APP_COLORS.accent};
 `

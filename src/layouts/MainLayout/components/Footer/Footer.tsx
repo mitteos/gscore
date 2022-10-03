@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { appColors, typography } from "styles"
+import { APP_COLORS, TYPOGRAPHY } from "styles"
 import Image from "next/image"
 import { LogoIcon, FacebookIcon, LinkedInIcon, TwitterIcon } from "assets/svg"
 import Link from "next/link"
@@ -47,7 +47,7 @@ const Container = styled.div`
 `
 const FooterContainer = styled.footer`
 	margin: 42px 0 0 0;
-	border-top: 1px solid ${appColors.neutral600};
+	border-top: 1px solid ${APP_COLORS.neutral600};
 	padding: 60px 0 42px 0;
 `
 const FooterText = styled.p`
@@ -59,12 +59,12 @@ const FooterText = styled.p`
 	width: 322px;
   @media (max-width: 500px) {
     font-family: "THICCCBOI", serif;
-    ${typography.paragraphDefault}
+    ${TYPOGRAPHY.paragraphDefault}
   }
 `
 const FooterLine = styled.div`
 	width: 100%;
-	border: 1px solid ${appColors.neutral600};
+	border: 1px solid ${APP_COLORS.neutral600};
 	margin: 60px 0 44px 0;
 `
 const Copyright = styled.div`
@@ -72,7 +72,7 @@ const Copyright = styled.div`
   font-weight: 500;
   font-size: 18px;
   line-height: 30px;
-	color: ${appColors.neutral400};
+	color: ${APP_COLORS.neutral400};
   @media (max-width: 1200px) {
     font-size: 16px;
   }
@@ -82,7 +82,7 @@ const Copyright = styled.div`
 `
 const CopyrightLink = styled.a`
 	text-decoration: underline;
-	color: ${appColors.neutral100};
+	color: ${APP_COLORS.neutral100};
 	cursor: pointer;
 `
 const FooterRow = styled.div`

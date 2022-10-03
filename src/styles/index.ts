@@ -1,1 +1,1 @@
-export {typography, appColors} from "./presets"
+export {TYPOGRAPHY, APP_COLORS} from "./presets"

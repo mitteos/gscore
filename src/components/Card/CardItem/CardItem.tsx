@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { appColors, typography } from "styles"
+import { APP_COLORS, TYPOGRAPHY } from "styles"
 import { CardState } from "components/Card/types"
 import { BenefitList } from "components/Card"
 
@@ -31,7 +31,7 @@ const CardWrapper = styled.div<CardItemStyles>`
 	padding: 42px 48px;
   border-radius: 12px;
 	flex: 1;
-	background: ${({accent}) => accent ? appColors.accent : appColors.neutral700};
+	background: ${({accent}) => accent ? APP_COLORS.accent : APP_COLORS.neutral700};
 	transform: translateY(${({accent}) => accent ? "-50px" : "0"});
   @media (max-width: 1200px) {
     padding: 30px;
@@ -54,25 +54,25 @@ const CardWrapper = styled.div<CardItemStyles>`
 `
 const CardPrice = styled.h1`
 	text-align: center;
-  ${typography.headings1}
+  ${TYPOGRAPHY.headings1}
 	margin: 0 0 4px;
 	@media (max-width: 1200px) {
-    ${typography.headings2}
+    ${TYPOGRAPHY.headings2}
   }
 `
 const CardTitle = styled.h2`
 	text-align: center;
-  ${typography.single400Bold}
+  ${TYPOGRAPHY.single400Bold}
   margin: 0 0 8px;
   @media (max-width: 1200px) {
-    ${typography.single300Bold}
+    ${TYPOGRAPHY.single300Bold}
   }
 `
 const CardDescription = styled.p`
 	text-align: center;
-  ${typography.paragraphDefault};
+  ${TYPOGRAPHY.paragraphDefault};
   @media (max-width: 1200px) {
-  	${typography.paragraphSmall}
+  	${TYPOGRAPHY.paragraphSmall}
 	}
 `
 const CardLine = styled.div<CardItemStyles>`
@@ -83,11 +83,11 @@ const CardLine = styled.div<CardItemStyles>`
 
 const CardButton = styled.div<CardItemStyles>`
 	width: 100%;
-  ${typography.single200Bold}
+  ${TYPOGRAPHY.single200Bold}
   padding: 26px 0;
 	background: #ffffff;
 	border-radius: 6px;
-	color: ${({accent}) => accent ? appColors.accent : appColors.neutral800};
+	color: ${({accent}) => accent ? APP_COLORS.accent : APP_COLORS.neutral800};
 	text-align: center;
 	cursor: pointer;
 `

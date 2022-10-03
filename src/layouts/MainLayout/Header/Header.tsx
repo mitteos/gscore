@@ -2,9 +2,8 @@ import styled from "styled-components"
 import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
-import { HeaderNavigation } from "components/Layout"
-import MobileOpenIcon from "assets/svg/mobileMenu.svg"
-import LogoIcon from "assets/svg/logo.svg"
+import { HeaderNavigation } from "layouts/MainLayout"
+import { LogoIcon, MobileMenuIcon } from "assets/svg"
 
 export const Header = () => {
 	
@@ -24,7 +23,7 @@ export const Header = () => {
 				/>
 				<MenuButton onClick={() => setMobileMenuIsOpen(true)}>
 					<Image
-						src={MobileOpenIcon}
+						src={MobileMenuIcon}
 						width={24}
 						height={24}
 					/>

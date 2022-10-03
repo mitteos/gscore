@@ -1,6 +1,5 @@
 import Image from "next/image"
-import CheckAccentIcon from "assets/svg/checkAccent.svg"
-import CheckIcon from "assets/svg/check.svg"
+import { CheckIcon, CheckAccentIcon } from "assets/svg"
 import React from "react"
 import styled from "styled-components"
 import { BenefitsState } from "components/Card/types"

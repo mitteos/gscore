@@ -1,83 +1,139 @@
+import { css } from "styled-components"
+
 export const typography = {
-	specialHeading1: "font-weight: 700;\n" +
-		"font-size: 78px;\n" +
-		"line-height: 86px;",
-	specialHeading2: "font-weight: 700;\n" +
-		"font-size: 54px;\n" +
-		"line-height: 64px;",
-	specialHeading3: "font-weight: 700;\n" +
-		"font-size: 44px;\n" +
-		"line-height: 54px;",
-	specialHeading4: "font-weight: 700;\n" +
-		"font-size: 28px;\n" +
-		"line-height: 40px;",
-	headings1: "font-weight: 700;\n" +
-		"font-size: 54px;\n" +
-		"line-height: 66px;",
-	headings2: "font-weight: 700;\n" +
-		"font-size: 38px;\n" +
-		"line-height: 50px;",
-	headings3: "font-weight: 700;\n" +
-		"font-size: 24px;\n" +
-		"line-height: 34px;",
-	headings4: "font-weight: 700;\n" +
-		"font-size: 22px;\n" +
-		"line-height: 28px;",
-	headings5: "font-weight: 700;\n" +
-		"font-size: 18px;\n" +
-		"line-height: 24px;",
-	headings6: "font-weight: 700;\n" +
-		"font-size: 16px;\n" +
-		"line-height: 22px;",
-	paragraphLarge: "font-weight: 400;\n" +
-		"font-size: 24px;\n" +
-		"line-height: 38px;",
-	paragraphDefault: "font-weight: 400;\n" +
-		"font-size: 18px;\n" +
-		"line-height: 30px;",
-	paragraphSmall: "font-weight: 400;\n" +
-		"font-size: 14px;\n" +
-		"line-height: 24px;",
-	single400Regular: "font-weight: 400;\n" +
-		"font-size: 24px;\n" +
-		"line-height: 26px;",
-	single400Medium: "font-weight: 600;\n" +
-		"font-size: 24px;\n" +
-		"line-height: 26px;",
-	single400Bold: "font-weight: 700;\n" +
-		"font-size: 24px;\n" +
-		"line-height: 26px;",
-	single300Regular: "font-weight: 400;\n" +
-		"font-size: 20px;\n" +
-		"line-height: 22px;",
-	single300Medium: "font-weight: 600;\n" +
-		"font-size: 20px;\n" +
-		"line-height: 22px;",
-	single300Bold: "font-weight: 700;\n" +
-		"font-size: 20px;\n" +
-		"line-height: 22px;",
-	single200Regular: "font-weight: 400;\n" +
-		"font-size: 18px;\n" +
-		"line-height: 20px;",
-	single200Medium: "font-weight: 600;\n" +
-		"font-size: 18px;\n" +
-		"line-height: 20px;",
-	single200Bold: "font-weight: 700;\n" +
-		"font-size: 18px;\n" +
-		"line-height: 20px;",
-	single100Regular: "font-weight: 400;\n" +
-		"font-size: 16px;\n" +
-		"line-height: 18px;",
-	single100Medium: "font-weight: 600;\n" +
-		"font-size: 16px;\n" +
-		"line-height: 18px;",
-	single100Bold: "font-weight: 700;\n" +
-		"font-size: 16px;\n" +
-		"line-height: 18px;",
-	richBold: "font-weight: 700;\n" +
-		"font-size: 18px;\n" +
-		"line-height: 30px;",
-	richLink: "font-weight: 400;\n" +
-		"font-size: 18px;\n" +
-		"line-height: 30px;"
+	specialHeading1: css`
+		font-weight: 700;
+		font-size: 78px;
+		line-height: 86px;
+	`,
+	specialHeading2: css`
+		font-weight: 700;
+		font-size: 54px;
+		line-height: 64px
+	`,
+	specialHeading3: css`
+		font-weight: 700;
+		font-size: 44px;
+		line-height: 54px;
+		`,
+	specialHeading4: css`
+		font-weight: 700;
+		font-size: 28px;
+		line-height: 40px;
+		`,
+	headings1: css`
+		font-weight: 700;
+		font-size: 54px;
+		line-height: 66px;
+		`,
+	headings2: css`
+		font-weight: 700;
+		font-size: 38px;
+		line-height: 50px;
+		`,
+	headings3: css`
+		font-weight: 700;
+		font-size: 24px;
+		line-height: 34px;
+		`,
+	headings4: css`
+		font-weight: 700;
+		font-size: 22px;
+		line-height: 28px;
+		`,
+	headings5: css`
+		font-weight: 700;
+		font-size: 18px;
+		line-height: 24px;
+		`,
+	headings6: css`
+		font-weight: 700;
+		font-size: 16px;
+		line-height: 22px;
+		`,
+	paragraphLarge: css`
+		font-weight: 400;
+		font-size: 24px;
+		line-height: 38px;
+		`,
+	paragraphDefault: css`
+		font-weight: 400;
+		font-size: 18px;
+		line-height: 30px;
+		`,
+	paragraphSmall: css`
+		font-weight: 400;
+		font-size: 14px;
+		line-height: 24px;
+		`,
+	single400Regular: css`
+		font-weight: 400;
+		font-size: 24px;
+		line-height: 26px;
+		`,
+	single400Medium: css`
+		font-weight: 600;
+		font-size: 24px;
+		line-height: 26px;
+		`,
+	single400Bold: css`
+		font-weight: 700;
+		font-size: 24px;
+		line-height: 26px;
+		`,
+	single300Regular: css`
+		font-weight: 400;
+		font-size: 20px;
+		line-height: 22px;
+		`,
+	single300Medium: css`
+		font-weight: 600;
+		font-size: 20px;
+		line-height: 22px;
+		`,
+	single300Bold: css`
+		font-weight: 700;
+		font-size: 20px;
+		line-height: 22px;
+		`,
+	single200Regular: css`
+		font-weight: 400;
+		font-size: 18px;
+		line-height: 20px;
+		`,
+	single200Medium: css`
+		font-weight: 600;
+		font-size: 18px;
+		line-height: 20px;
+		`,
+	single200Bold: css`
+		font-weight: 700;
+		font-size: 18px;
+		line-height: 20px;
+		`,
+	single100Regular: css`
+		font-weight: 400;
+		font-size: 16px;
+		line-height: 18px;
+		`,
+	single100Medium: css`
+		font-weight: 600;
+		font-size: 16px;
+		line-height: 18px;
+		`,
+	single100Bold: css`
+		font-weight: 700;
+		font-size: 16px;
+		line-height: 18px;
+		`,
+	richBold: css`
+		font-weight: 700;
+		font-size: 18px;
+		line-height: 30px;
+		`,
+	richLink: css`
+		font-weight: 400;
+		font-size: 18px;
+		line-height: 30px;
+		`
 }

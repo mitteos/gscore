@@ -2,10 +2,13 @@ import styled from "styled-components"
 import { CardList } from "components/Card"
 import Link from "next/link"
 import { appColors, typography } from "styles"
+import { HeadComponent, LayoutWrapper } from "layouts/MainLayout"
+import React from "react"
 
 const Home = () => {
 	return (
-		<div>
+		<LayoutWrapper>
+			<HeadComponent title="Gscore" />
 			<Title>Get started with Gscore today!</Title>
 			<Container>
 				<CardList />
@@ -16,7 +19,7 @@ const Home = () => {
 					</Link>
 				</AdditionLink>
 			</Container>
-		</div>
+		</LayoutWrapper>
 	)
 }
 export default Home

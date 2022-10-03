@@ -1,11 +1,8 @@
 import styled from "styled-components"
 import { appColors, typography } from "styles"
 import Image from "next/image"
-import LogoIcon from "assets/svg/logo.svg"
+import { LogoIcon, FacebookIcon, LinkedInIcon, TwitterIcon } from "assets/svg"
 import Link from "next/link"
-import FacebookIcon from "assets/svg/facebook.svg"
-import TwitterIcon from "assets/svg/twitter.svg"
-import LinkedInIcon from "assets/svg/linkedIn.svg"
 
 export const Footer = () => {
 	return (

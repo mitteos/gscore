@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { Header, Footer, HeadComponent } from "components/Layout"
+import { Header, Footer } from "layouts/MainLayout"
 
 interface LayoutWrapperProps {
 	children: React.ReactNode | React.ReactNode[]
@@ -9,7 +9,6 @@ interface LayoutWrapperProps {
 export const LayoutWrapper: React.FC<LayoutWrapperProps> = ({children}) => {
 	return (
 		<LayoutContainer>
-			<HeadComponent />
 			<Header />
 			<MainContainer>
 				{children}

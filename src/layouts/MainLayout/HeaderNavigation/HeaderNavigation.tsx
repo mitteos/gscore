@@ -3,11 +3,7 @@ import styled from "styled-components"
 import Link from "next/link"
 import Image from "next/image"
 import { appColors, typography } from "styles"
-import ArrowIcon from "assets/svg/lowArrow.svg"
-import SettingsIcon from "assets/svg/settings.svg"
-import LogoutIcon from "assets/svg/logout.svg"
-import CloseIcon from "assets/svg/close.svg"
-import LogoIcon from "assets/svg/logo.svg"
+import { LowArrowIcon, SettingsIcon, LogoutIcon, CloseIcon, LogoIcon } from "assets/svg"
 
 interface HeaderNavigationProps {
 	mobileMenuIsOpen: boolean;
@@ -20,11 +16,11 @@ export const HeaderNavigation: React.FC<HeaderNavigationProps> = ({mobileMenuIsO
 	
 	return (
 		<NavigationContainer
-			isopen={mobileMenuIsOpen}
+			$isOpen={mobileMenuIsOpen}
 			onClick={() => setMobileMenuIsOpen(false)}
 		>
 			<NavigationInner
-				isopen={mobileMenuIsOpen}
+				$isOpen={mobileMenuIsOpen}
 				onClick={(e) => e.stopPropagation()}
 			>
 				<MobileNavigation>
@@ -43,13 +39,13 @@ export const HeaderNavigation: React.FC<HeaderNavigationProps> = ({mobileMenuIsO
 				<ProfileContainer onClick={() => setProfileIsOpen(!profileIsOpen)}>
 					<HeaderText>Alex</HeaderText>
 					<ProfileIcon
-						src={ArrowIcon}
+						src={LowArrowIcon}
 						width={14}
 						height={7}
-						isopen={profileIsOpen}
+						$isOpen={profileIsOpen}
 					/>
 				</ProfileContainer>
-				<ProfileNavigation isopen={profileIsOpen}>
+				<ProfileNavigation $isOpen={profileIsOpen}>
 					<Link href="/">
 						<NavigationLink>
 							<Image src={SettingsIcon} width={24} height={24} />
@@ -68,7 +64,7 @@ export const HeaderNavigation: React.FC<HeaderNavigationProps> = ({mobileMenuIsO
 		</NavigationContainer>
 )
 }
-const NavigationContainer = styled.div<{isopen: boolean}>`
+const NavigationContainer = styled.div<{$isOpen: boolean}>`
   @media (max-width: 600px) {
     position: fixed;
     top: 0;
@@ -77,12 +73,12 @@ const NavigationContainer = styled.div<{isopen: boolean}>`
     height: 100vh;
     z-index: 2;
 		background: rgba(0,0,0,0.6);
-		visibility: ${({isopen}) => isopen ? "visible" : "hidden"};
-		opacity: ${({isopen}) => isopen ? "1" : "0"};
+		visibility: ${({$isOpen}) => $isOpen ? "visible" : "hidden"};
+		opacity: ${({$isOpen}) => $isOpen ? "1" : "0"};
 		transition: all .3s ease;
   }
 `
-const NavigationInner = styled.div<{isopen: boolean}>`
+const NavigationInner = styled.div<{$isOpen: boolean}>`
 	display: flex;
 	align-items: center;
 	gap: 32px;
@@ -99,7 +95,7 @@ const NavigationInner = styled.div<{isopen: boolean}>`
     gap: 0;
 		padding: 28px 24px;
 		transition: all .3s ease;
-    transform: translateX(${({isopen}) => isopen ? "0px" : "100%"});
+    transform: translateX(${({$isOpen}) => $isOpen ? "0px" : "100%"});
   }
 `
 const MobileNavigation = styled.div`
@@ -144,17 +140,14 @@ const ProfileContainer = styled.div`
 	gap: 12px;
 	cursor: pointer;
 	z-index: 1;
-  @media (max-width: 600px) {
-    //margin: 0 0 31px;
-  }
 `
-const ProfileIcon = styled(Image)<{isopen: boolean}>`
+const ProfileIcon = styled(Image)<{$isOpen: boolean}>`
 	width: 14px;
 	height: 7px;
 	transition: all .3s ease;
-	transform: rotate(${({isopen}) => isopen ? "180" : "0"}deg);
+	transform: rotate(${({$isOpen}) => $isOpen ? "180" : "0"}deg);
 `
-const ProfileNavigation = styled.div<{isopen: boolean}>`
+const ProfileNavigation = styled.div<{$isOpen: boolean}>`
 	position: absolute;
 	display: flex;
 	flex-direction: column;
@@ -166,9 +159,9 @@ const ProfileNavigation = styled.div<{isopen: boolean}>`
 	border-radius: 12px;
 	transition: all .3s ease;
 	z-index: 0;
-	transform: translateY(${({isopen}) => isopen ? "100%" : "50%"});
-	visibility: ${({isopen}) => isopen ? "visible" : "hidden"};
-	opacity: ${({isopen}) => isopen ? "1" : "0"};
+	transform: translateY(${({$isOpen}) => $isOpen ? "100%" : "50%"});
+	visibility: ${({$isOpen}) => $isOpen ? "visible" : "hidden"};
+	opacity: ${({$isOpen}) => $isOpen ? "1" : "0"};
   @media (max-width: 600px) {
 		position: relative;
 		visibility: visible;
@@ -178,8 +171,8 @@ const ProfileNavigation = styled.div<{isopen: boolean}>`
 		padding: 0;
 		gap: 27px;
 		overflow: hidden;
-		height: ${({isopen}) => isopen ? "101px" : "0"};
-    margin: ${({isopen}) => isopen ? "31px 0 0 0" : "0"};
+		height: ${({$isOpen}) => $isOpen ? "101px" : "0"};
+    margin: ${({$isOpen}) => $isOpen ? "31px 0 0 0" : "0"};
   }
 `
 const NavigationLink = styled.a`

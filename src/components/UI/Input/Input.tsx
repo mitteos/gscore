@@ -16,11 +16,12 @@ interface InputProps<T extends FieldValues> {
 	maxLength?: number;
 	isEmail?: boolean;
 	isDisabled?: boolean;
+	className?: string;
 }
 
-export const Input = <T extends FieldValues>({isDisabled ,isEmail, minLength, maxLength, type = "text", placeholder, register, name, errors, required = false}: InputProps<T>) => {
+export const Input = <T extends FieldValues>({className, isDisabled ,isEmail, minLength, maxLength, type = "text", placeholder, register, name, errors, required = false}: InputProps<T>) => {
 	return (
-		<Container>
+		<Container className={className}>
 			<InputContainer>
 				<InputInner
 					placeholder={placeholder}

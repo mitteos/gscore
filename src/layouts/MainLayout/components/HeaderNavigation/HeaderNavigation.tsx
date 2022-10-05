@@ -46,7 +46,7 @@ export const HeaderNavigation: React.FC<HeaderNavigationProps> = ({mobileMenuIsO
 					/>
 				</ProfileContainer>
 				<ProfileNavigation $isOpen={profileIsOpen}>
-					<Link href="/">
+					<Link href="/settings">
 						<NavigationLink>
 							<Image src={SettingsIcon} width={24} height={24} />
 							<HeaderText>Settings</HeaderText>

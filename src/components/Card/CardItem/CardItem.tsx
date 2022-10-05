@@ -3,6 +3,7 @@ import styled from "styled-components"
 import { APP_COLORS, TYPOGRAPHY } from "styles"
 import { CardState } from "components/Card/types"
 import { BenefitList } from "components/Card"
+import Link from "next/link"
 
 interface CardItemStyles {
 	accent?: boolean
@@ -22,7 +23,9 @@ export const CardItem: React.FC<CardItemProps> = ({accent, cardInfo}) => {
 				benefits={cardInfo.benefits}
 				accent={accent}
 			/>
-			<CardButton accent={accent}>Get Gscore</CardButton>
+			<Link href="/auth">
+				<CardButton accent={accent}>Get Gscore</CardButton>
+			</Link>
 		</CardWrapper>
 	)
 }

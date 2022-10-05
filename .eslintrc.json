@@ -35,6 +35,8 @@
         "indent": "off",
         "@typescript-eslint/explicit-function-return-type": "off",
         "@typescript-eslint/strict-boolean-expressions": "off",
-        "no-unused-vars": "warn"
+        "no-unused-vars": "warn",
+        "@typescript-eslint/no-misused-promises": "off",
+        "@typescript-eslint/no-floating-promises": "off"
     }
 }

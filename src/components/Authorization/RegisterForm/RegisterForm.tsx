@@ -87,7 +87,6 @@ const CreateAccountForm = styled.form`
 `
 const FormButton = styled(Button)`
 	margin: 24px 0 0 0;
-	color: black;
 `
 const AdditionContainer = styled.div`
 	display: flex;

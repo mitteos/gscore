@@ -5,18 +5,20 @@ import Image from "next/image"
 import { LoaderIcon } from "assets/svg"
 
 interface ButtonProps {
+	className?: string;
 	variant: "primary" | "secondary";
 	isLoading: boolean;
 	children: React.ReactNode | React.ReactNode[];
 	onClick?: () => void
 }
 
-export const Button: React.FC<ButtonProps> = ({isLoading, variant, children, onClick}) => {
+export const Button: React.FC<ButtonProps> = ({className, isLoading, variant, children, onClick}) => {
 	return (
 		<StyledButton
 			$variant={variant}
 			$isLoading={isLoading}
 			onClick={onClick}
+			className={className}
 		>
 			{isLoading
 				? <ButtonLoader src={LoaderIcon} />

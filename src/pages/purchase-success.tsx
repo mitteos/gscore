@@ -64,4 +64,5 @@ const Subtitle = styled.h2`
 `
 const PurchaseButton = styled(Button)`
 	width: 100%;
+	margin: 48px 0 0;
 `

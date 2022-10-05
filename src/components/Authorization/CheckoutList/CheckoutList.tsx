@@ -50,5 +50,4 @@ const CheckoutContainer = styled.div<{$success: boolean}>`
   background: ${APP_COLORS.neutral700};
 	border-bottom-left-radius: 12px;
 	border-bottom-right-radius: 12px;
-	margin: 0 0 24px;
 `

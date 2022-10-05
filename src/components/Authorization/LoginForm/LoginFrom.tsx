@@ -68,5 +68,5 @@ const LoginFormContainer = styled.form`
 	gap: 24px;
 `
 const FormButton = styled(Button)`
-	width: 200px;
+	margin: 24px 0 0;
 `

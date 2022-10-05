@@ -29,7 +29,11 @@ export const Checkout = () => {
 				<TotalText>Total:</TotalText>
 				<TotalText>$77</TotalText>
 			</TotalContainer>
-			<Button variant="primary" isLoading={isLoading} onClick={purchase}>Purchase</Button>
+			<Button
+				variant="primary"
+				isLoading={isLoading}
+				onClick={purchase}
+			>Purchase</Button>
 		</>
 	)
 }
@@ -41,12 +45,11 @@ const Title = styled.h1`
     ${TYPOGRAPHY.specialHeading4};
   }
 `
-
 const TotalContainer = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	margin: 0 0 48px;
+	margin: 24px 0 48px;
 `
 const TotalText = styled.h1`
 	${TYPOGRAPHY.specialHeading4};

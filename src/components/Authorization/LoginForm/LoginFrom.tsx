@@ -3,16 +3,18 @@ import { TYPOGRAPHY } from "styles"
 import { Button, Input } from "components/UI"
 import React, { useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
+import {NextPage} from "next";
+import {emailPattern} from "../../../utils/patterns";
 
 interface LoginFormProps {
-	setStep: (e: 1 | 2 | 3) => void
+	setStep: (e: number) => void
 }
 interface LoginInputs {
 	email: string;
 	password: string;
 }
 
-export const LoginForm: React.FC<LoginFormProps> = ({setStep}) => {
+export const LoginForm: NextPage<LoginFormProps> = ({setStep}) => {
 	
 	const {register, handleSubmit, formState: {errors}} = useForm<LoginInputs>()
 	const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -37,7 +39,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({setStep}) => {
 					name="email"
 					errors={errors.email}
 					type="email"
-					isEmail={true}
+					pattern={emailPattern}
 					isDisabled={isLoading}
 				/>
 				<Input

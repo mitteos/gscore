@@ -5,8 +5,9 @@ import { useRouter } from "next/router"
 import { CheckoutList } from "components/Authorization/CheckoutList"
 import { useState } from "react"
 import { CheckoutItemState } from "components/Authorization/types"
+import {NextPage} from "next";
 
-export const Checkout = () => {
+export const Checkout: NextPage = () => {
 	
 	const {push} = useRouter()
 	const [isLoading, setIsLoading] = useState<boolean>(false)

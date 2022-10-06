@@ -2,12 +2,13 @@ import React, { useState } from "react"
 import styled from "styled-components"
 import { APP_COLORS, TYPOGRAPHY } from "styles"
 import { ProgressItem } from "components/Authorization/ProgressItem"
+import {NextPage} from "next";
 
 interface ProgressBarProps {
 	step: number;
 }
 
-export const ProgressBar: React.FC<ProgressBarProps> = ({step}) => {
+export const ProgressBar: NextPage<ProgressBarProps> = ({step}) => {
 	
 	const [progressItems, setProgressItems] = useState([
 		{id: 1, title: "Create account"},

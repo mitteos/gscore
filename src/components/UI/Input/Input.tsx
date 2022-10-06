@@ -4,6 +4,7 @@ import React from "react"
 import { FieldError, FieldValues, Path, UseFormRegister } from "react-hook-form"
 import Image from "next/image"
 import { CloseAccentIcon } from "assets/svg"
+import {PatternState} from "utils/patterns";
 
 interface InputProps<T extends FieldValues> {
 	type?: string;
@@ -14,12 +15,36 @@ interface InputProps<T extends FieldValues> {
 	errors: FieldError | undefined;
 	minLength?: number;
 	maxLength?: number;
-	isEmail?: boolean;
+	pattern?: PatternState;
 	isDisabled?: boolean;
 	className?: string;
 }
+interface Option {
+	value: number;
+	message: string;
+}
+interface RegisterOptions {
+	required: string | boolean;
+	minLength: 0 | Option | undefined;
+	maxLength: 0 | Option | undefined;
+	pattern: PatternState | undefined;
+}
 
-export const Input = <T extends FieldValues>({className, isDisabled ,isEmail, minLength, maxLength, type = "text", placeholder, register, name, errors, required = false}: InputProps<T>) => {
+export const Input = <T extends FieldValues>({className, isDisabled ,pattern, minLength, maxLength, type = "text", placeholder, register, name, errors, required = false}: InputProps<T>) => {
+
+	const registerOptions: RegisterOptions = {
+		required: required && "Required",
+		minLength: minLength && {
+			value: minLength,
+			message: `Minimum ${minLength} character`
+		},
+		maxLength: maxLength && {
+			value: maxLength,
+			message: `Maximum ${maxLength} character`
+		},
+		pattern
+	}
+
 	return (
 		<Container className={className}>
 			<InputContainer>
@@ -28,23 +53,7 @@ export const Input = <T extends FieldValues>({className, isDisabled ,isEmail, mi
 					type={type}
 					$errors={errors}
 					disabled={isDisabled}
-					{...register(name, {
-						required: required && "Required",
-						minLength: minLength && {
-							value: minLength,
-							message: `Minimum ${minLength} character`
-						},
-						maxLength: maxLength && {
-							value: maxLength,
-							message: `Maximum ${maxLength} character`
-						},
-						pattern: isEmail
-							? {
-								value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
-								message: "Invalid Email"
-							}
-							: undefined
-					})}
+					{...register(name, registerOptions)}
 				/>
 				<InputStatus>
 					{errors && !isDisabled && <Image src={CloseAccentIcon} width={18} height={18}/>}

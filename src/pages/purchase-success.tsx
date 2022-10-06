@@ -7,8 +7,9 @@ import { Button } from "components/UI"
 import { useRouter } from "next/router"
 import { CheckoutList } from "components/Authorization"
 import { CheckoutItemState } from "components/Authorization/types"
+import {NextPage} from "next";
 
-const PurchaseSuccess = () => {
+const PurchaseSuccess: NextPage = () => {
 	
 	const {push} = useRouter()
 	const [checkoutItems, setCheckoutItems] = useState<CheckoutItemState[]>([

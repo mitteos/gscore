@@ -2,31 +2,30 @@ import React, { useState } from "react"
 import { MainLayout } from "layouts"
 import { HeadComponent } from "components/HeadComponent"
 import styled from "styled-components"
-import { APP_COLORS, TYPOGRAPHY } from "styles"
+import { TYPOGRAPHY } from "styles"
 import { ChangePassword, ChangePersonalInfo } from "components/User"
+import { NextPage } from "next";
+import {TabsList} from "components/UI";
+import {TabState} from "components/UI/types";
 
-const Settings = () => {
+const Settings: NextPage = () => {
 	
 	const [activeTab, setActiveTab] = useState<number>(1)
+	const [tabs, setTabs] = useState<TabState[]>([
+		{id: 1, title: "Personal info"},
+		{id: 2, title: "Change password"}
+	])
 	
 	return (
 		<MainLayout>
 			<HeadComponent title="Gscore | Settings" />
 			<Container>
 				<Title>Settings</Title>
-				<TabsContainer>
-					<TabsRow>
-						<TabItem
-							$isActive={activeTab === 1}
-							onClick={() => setActiveTab(1)}
-						>Personal info</TabItem>
-						<TabItem
-							$isActive={activeTab === 2}
-							onClick={() => setActiveTab(2)}
-						>Change password</TabItem>
-					</TabsRow>
-					<TabsLine />
-				</TabsContainer>
+				<TabsList
+					tabs={tabs}
+					setActiveTab={setActiveTab}
+					activeTab={activeTab}
+				/>
 				{activeTab === 1 && <ChangePersonalInfo />}
 				{activeTab === 2 && <ChangePassword />}
 			</Container>
@@ -44,40 +43,10 @@ const Container = styled.div`
 const Title = styled.h1`
 	${TYPOGRAPHY.specialHeading2};
 	margin: 0 0 48px;
-`
-const TabsContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	gap: 12px;
-	margin: 0 0 48px;
-`
-const TabsRow = styled.div`
-	display: flex;
-	align-items: center;
-	position: relative;
-`
-const TabItem = styled.div<{$isActive: boolean}>`
-	${TYPOGRAPHY.single200Bold};
-	color: ${({$isActive}) => $isActive ? APP_COLORS.accent : APP_COLORS.neutral600};
-	cursor: pointer;
-	position: relative;
-	padding: 0 24px;
-  transition: all .3s ease;
-  &::after {
-		content: "";
-		width: 100%;
-		height: 2px;
-		background: ${APP_COLORS.accent};
-		position: absolute;
-		bottom: -14px;
-		left: 0;
-		transition: all .3s ease;
-		opacity: ${({$isActive}) => $isActive ? "1" : "0"};
+  @media (max-width: 1000px) {
+    ${TYPOGRAPHY.specialHeading3};
+  }
+	@media (max-width: 700px) {
+		${TYPOGRAPHY.specialHeading4};
 	}
-`
-const TabsLine = styled.div`
-	width: 100%;
-	height: 2px;
-	background: ${APP_COLORS.neutral600};
 `

@@ -3,13 +3,15 @@ import { TYPOGRAPHY } from "styles"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { Button, Input } from "components/UI"
 import React, { useState } from "react"
+import {NextPage} from "next";
+import {emailPattern} from "../../../utils/patterns";
 
 interface FormInputs {
 	username: string;
 	email: string;
 }
 
-export const ChangePersonalInfo = () => {
+export const ChangePersonalInfo: NextPage = () => {
 	
 	const {register, handleSubmit, formState: {errors}} = useForm<FormInputs>()
 	const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -41,7 +43,7 @@ export const ChangePersonalInfo = () => {
 					name="email"
 					errors={errors.email}
 					type="email"
-					isEmail={true}
+					pattern={emailPattern}
 					isDisabled={isLoading}
 				/>
 				<FormButton
@@ -56,6 +58,9 @@ export const ChangePersonalInfo = () => {
 const Title = styled.h1`
   ${TYPOGRAPHY.specialHeading4};
   margin: 0 0 24px;
+	@media (max-width: 700px) {
+		font-size: 20px;
+	}
 `
 const Form = styled.form`
   display: flex;

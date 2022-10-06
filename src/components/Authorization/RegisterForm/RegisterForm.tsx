@@ -3,9 +3,10 @@ import React, { useState } from "react"
 import styled from "styled-components"
 import { APP_COLORS, TYPOGRAPHY } from "styles"
 import { SubmitHandler, useForm } from "react-hook-form"
+import { emailPattern } from "utils/patterns";
 
 interface RegisterFormProps {
-	setStep: (e: 1 | 2 | 3) => void
+	setStep: (e: number) => void
 }
 interface RegisterFormInputs {
 	username: string;
@@ -46,7 +47,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({setStep}) => {
 					register={register}
 					errors={errors.email}
 					required={true}
-					isEmail={true}
+					pattern={emailPattern}
 					type="email"
 					isDisabled={isLoading}
 				/>

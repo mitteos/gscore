@@ -3,13 +3,14 @@ import { TYPOGRAPHY } from "styles"
 import { SubmitHandler, useForm } from "react-hook-form"
 import React, { useState } from "react"
 import { Button, Input } from "components/UI"
+import {NextPage} from "next";
 
 interface FormInputs {
-	current: string;
-	new: string;
+	currentPassword: string;
+	newPassword: string;
 }
 
-export const ChangePassword = () => {
+export const ChangePassword: NextPage = () => {
 	
 	const {register, handleSubmit, formState: {errors}} = useForm<FormInputs>()
 	const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -30,16 +31,16 @@ export const ChangePassword = () => {
 					placeholder="Current Password"
 					required={true}
 					register={register}
-					name="current"
-					errors={errors.current}
+					name="currentPassword"
+					errors={errors.currentPassword}
 					isDisabled={isLoading}
 				/>
 				<Input
 					placeholder="New Password"
 					required={true}
 					register={register}
-					name="new"
-					errors={errors.new}
+					name="newPassword"
+					errors={errors.newPassword}
 					isDisabled={isLoading}
 				/>
 				<FormButton
@@ -54,6 +55,9 @@ export const ChangePassword = () => {
 const Title = styled.h1`
 	${TYPOGRAPHY.specialHeading4};
 	margin: 0 0 24px;
+  @media (max-width: 700px) {
+    font-size: 20px;
+  }
 `
 const Form = styled.form`
   display: flex;

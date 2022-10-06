@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import styled from "styled-components"
-import { APP_COLORS, TYPOGRAPHY } from "styles"
 import { ProgressItem } from "components/Authorization/ProgressItem"
 
 interface ProgressBarProps {

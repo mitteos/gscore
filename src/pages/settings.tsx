@@ -11,10 +11,10 @@ import {TabState} from "components/UI/types";
 const Settings: NextPage = () => {
 	
 	const [activeTab, setActiveTab] = useState<number>(1)
-	const [tabs, setTabs] = useState<TabState[]>([
+	const tabs: TabState[] =[
 		{id: 1, title: "Personal info"},
 		{id: 2, title: "Change password"}
-	])
+	]
 	
 	return (
 		<MainLayout>

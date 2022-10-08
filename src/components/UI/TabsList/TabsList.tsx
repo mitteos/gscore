@@ -5,12 +5,10 @@ import {TabState} from "components/UI/types";
 import {TabItem} from "components/UI";
 
 interface TabsListProps {
-	tabs: TabState[]
-	activeTab: number;
-	setActiveTab: (e: number) => void;
+	tabs: TabState[];
 }
 
-export const TabsList: React.FC<TabsListProps> = ({tabs, setActiveTab, activeTab}) => {
+export const TabsList: React.FC<TabsListProps> = ({tabs}) => {
 	return (
 		<TabsContainer>
 			<TabsRow>
@@ -18,8 +16,6 @@ export const TabsList: React.FC<TabsListProps> = ({tabs, setActiveTab, activeTab
 					<TabItem
 						key={tab.id}
 						tabInfo={tab}
-						isActive={activeTab === tab.id}
-						setIsActive={setActiveTab}
 					/>
 				)}
 			</TabsRow>

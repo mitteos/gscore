@@ -2,18 +2,27 @@ import styled from "styled-components";
 import {APP_COLORS, TYPOGRAPHY} from "styles";
 import React from "react";
 import {TabState} from "components/UI/types";
+import {useRouter} from "next/router";
 
 interface TabItemProps {
     tabInfo: TabState;
-    isActive: boolean;
-    setIsActive: (e: number) => void;
 }
 
-export const TabItem: React.FC<TabItemProps> = ({setIsActive, isActive, tabInfo}) => {
+export const TabItem: React.FC<TabItemProps> = ({tabInfo}) => {
+
+    const router = useRouter()
+
+    const changeTab = () => {
+        router.push({
+            pathname: "/settings",
+            query: { tab: tabInfo.query }
+        })
+    }
+
     return (
         <TabContainer
-            onClick={() => setIsActive(tabInfo.id)}
-            $isActive={isActive}
+            onClick={changeTab}
+            $isActive={router.query.tab === tabInfo.query}
         >
             {tabInfo.title}
         </TabContainer>

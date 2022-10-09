@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, {useEffect} from "react"
 import { MainLayout } from "layouts"
 import { HeadComponent } from "components/HeadComponent"
 import styled from "styled-components"
@@ -8,6 +8,7 @@ import { NextPage } from "next";
 import {TabsList} from "components/UI";
 import {TabState} from "components/UI/types";
 import {useRouter} from "next/router";
+
 
 const Settings: NextPage = () => {
 

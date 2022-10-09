@@ -2,17 +2,17 @@ import styled, { keyframes } from "styled-components"
 import { APP_COLORS, TYPOGRAPHY } from "styles"
 import React from "react"
 import Image from "next/image"
-import { LoaderIcon } from "assets/svg"
+import {LoaderAccentIcon, LoaderIcon} from "assets/svg"
 
 interface ButtonProps {
 	className?: string;
 	variant: "primary" | "secondary";
-	isLoading: boolean;
+	isLoading?: boolean;
 	children: React.ReactNode | React.ReactNode[];
 	onClick?: () => void
 }
 
-export const Button: React.FC<ButtonProps> = ({className, isLoading, variant, children, onClick}) => {
+export const Button: React.FC<ButtonProps> = ({className, isLoading = false, variant, children, onClick}) => {
 	return (
 		<StyledButton
 			$variant={variant}
@@ -21,7 +21,7 @@ export const Button: React.FC<ButtonProps> = ({className, isLoading, variant, ch
 			className={className}
 		>
 			{isLoading
-				? <ButtonLoader src={LoaderIcon} />
+				? <ButtonLoader src={variant === "primary" ? LoaderIcon : LoaderAccentIcon} />
 				: children}
 		</StyledButton>
 	)
@@ -30,16 +30,17 @@ export const Button: React.FC<ButtonProps> = ({className, isLoading, variant, ch
 const StyledButton = styled.button<{$variant: "primary" | "secondary", $isLoading: boolean}>`
 	cursor: pointer;
 	width: 200px;
-	background: ${APP_COLORS.accent};
+	background: ${({$variant}) => $variant === "primary" ? APP_COLORS.accent : APP_COLORS.neutral100};
   box-shadow: 0 10px 28px rgba(252, 88, 66, 0.2);
   border-radius: 4px;
 	padding: ${({$isLoading}) => $isLoading ? "18px 24px" : "20px 24px"} ;
 	${TYPOGRAPHY.single100Bold};
-	color: ${APP_COLORS.neutral100};
+	color: ${({$variant}) => $variant === "primary" ? APP_COLORS.neutral100 : APP_COLORS.accent};
 	border: none;
-	transition: background-color .3s ease;
+	transition: color, background-color .3s ease;
 	&:hover {
-		background: ${APP_COLORS.red400};
+		background: ${({$variant}) => $variant === "primary" ? APP_COLORS.red400 : APP_COLORS.neutral200};
+		color: ${({$variant}) => $variant === "secondary" && APP_COLORS.red400};
 	}
 `
 

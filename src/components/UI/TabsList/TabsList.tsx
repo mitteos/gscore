@@ -6,9 +6,10 @@ import {TabItem} from "components/UI";
 
 interface TabsListProps {
 	tabs: TabState[];
+	path: string;
 }
 
-export const TabsList: React.FC<TabsListProps> = ({tabs}) => {
+export const TabsList: React.FC<TabsListProps> = ({tabs, path}) => {
 	return (
 		<TabsContainer>
 			<TabsRow>
@@ -16,6 +17,7 @@ export const TabsList: React.FC<TabsListProps> = ({tabs}) => {
 					<TabItem
 						key={tab.id}
 						tabInfo={tab}
+						path={path}
 					/>
 				)}
 			</TabsRow>

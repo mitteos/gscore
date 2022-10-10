@@ -1,31 +1,26 @@
-import styled from "styled-components";
-import {APP_COLORS, TYPOGRAPHY} from "styles";
-import React from "react";
-import {TabState} from "components/UI/types";
-import {useRouter} from "next/router";
+import styled from "styled-components"
+import {APP_COLORS, TYPOGRAPHY} from "styles"
+import React from "react"
+import {TabState} from "components/UI/types"
+import {useRouter} from "next/router"
+import Link from "next/link"
 
 interface TabItemProps {
     tabInfo: TabState;
+    path: string;
 }
 
-export const TabItem: React.FC<TabItemProps> = ({tabInfo}) => {
+export const TabItem: React.FC<TabItemProps> = ({tabInfo, path}) => {
 
     const router = useRouter()
 
-    const changeTab = () => {
-        router.push({
-            pathname: "/settings",
-            query: { tab: tabInfo.query }
-        })
-    }
-
     return (
-        <TabContainer
-            onClick={changeTab}
-            $isActive={router.query.tab === tabInfo.query}
-        >
-            {tabInfo.title}
-        </TabContainer>
+        <Link href={{
+            pathname: path,
+            query: { tab: tabInfo.query }
+        }}>
+            <TabContainer $isActive={router.query.tab === tabInfo.query}>{tabInfo.title}</TabContainer>
+        </Link>
     );
 };
 

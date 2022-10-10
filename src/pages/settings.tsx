@@ -1,22 +1,22 @@
-import React, {useEffect, useState} from "react"
+import React, {useEffect} from "react"
 import { MainLayout } from "layouts"
 import { HeadComponent } from "components/HeadComponent"
 import styled from "styled-components"
 import { TYPOGRAPHY } from "styles"
 import { ChangePassword, ChangePersonalInfo } from "components/User"
-import { NextPage } from "next";
-import {TabsList} from "components/UI";
-import {TabState} from "components/UI/types";
-import {useRouter} from "next/router";
+import { NextPage } from "next"
+import {TabsList} from "components/UI"
+import {TabState} from "components/UI/types"
+import {useRouter} from "next/router"
+
+const tabs: TabState[] =[
+	{id: 1, title: "Personal info", query: "personal-info"},
+	{id: 2, title: "Change password", query: "password"}
+]
 
 const Settings: NextPage = () => {
 
 	const router = useRouter()
-
-	const tabs: TabState[] =[
-		{id: 1, title: "Personal info", query: "personal-info"},
-		{id: 2, title: "Change password", query: "password"}
-	]
 
 	useEffect(() => {
 		if(!router.query.tab) {
@@ -34,6 +34,7 @@ const Settings: NextPage = () => {
 				<Title>Settings</Title>
 				<TabsList
 					tabs={tabs}
+					path="/settings"
 				/>
 				{router.query.tab === "personal-info" && <ChangePersonalInfo />}
 				{router.query.tab === "password" && <ChangePassword />}

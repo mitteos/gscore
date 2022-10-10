@@ -5,15 +5,14 @@ import {CodeItem} from "components/Code"
 import {TYPOGRAPHY} from "../../../styles";
 import {Button} from "components/UI";
 
+const codes: CodeState[] = [
+	{id: 1, code: "asdasdasgasgwa41241gwagawgawfawfawfawfawfwa", domain: "https://vk.com", status: "Active"},
+	{id: 2, code: "gwag33s4y4sgs46", domain: "https://vk.com", status: "Inactive"},
+	{id: 3, code: "6gs36gs3g6s3g6s3b6s363s", domain: "https://vk.com", status: "Hold"},
+	{id: 4, code: "aseghsehsehsehsehsehseh", domain: "", status: "Inactive"},
+]
+
 export const CodeList: React.FC = () => {
-
-	const codes: CodeState[] = [
-		{id: 1, code: "asdasdasgasgwa41241gwagawgawfawfawfawfawfwa", domain: "https://vk.com", status: "Active"},
-		{id: 2, code: "gwag33s4y4sgs46", domain: "https://vk.com", status: "Inactive"},
-		{id: 3, code: "6gs36gs3g6s3g6s3b6s363s", domain: "https://vk.com", status: "Hold"},
-		{id: 4, code: "aseghsehsehsehsehsehseh", domain: "", status: "Inactive"},
-	]
-
 	return (
 		<Container>
 			<CodeWrapper>

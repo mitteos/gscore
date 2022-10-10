@@ -1,18 +1,11 @@
 import styled from "styled-components"
-import Image from "next/image";
-import {CloseIcon} from "assets/svg";
-import {TYPOGRAPHY} from "styles";
-import {Button} from "components/UI";
-import {useRouter} from "next/router";
+import Image from "next/image"
+import {CloseIcon} from "assets/svg"
+import {TYPOGRAPHY} from "styles"
+import {Button} from "components/UI"
+import Link from "next/link"
 
 export const SubscriptionsIsEmpty = () => {
-
-	const router = useRouter()
-
-	const buttonHandler = () => {
-		router.push("/")
-	}
-
 	return (
 		<Container>
 			<IconContainer>
@@ -20,7 +13,11 @@ export const SubscriptionsIsEmpty = () => {
 			</IconContainer>
 			<Title>No active subscriptions</Title>
 			<Subtitle>You can subscribe right now by clicking on the button below</Subtitle>
-			<SubButton variant="primary" onClick={buttonHandler}>Get Gscore</SubButton>
+			<Link href="/">
+				<a>
+					<SubButton variant="primary">Get Gscore</SubButton>
+				</a>
+			</Link>
 		</Container>
 	)
 }

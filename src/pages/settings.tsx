@@ -14,7 +14,6 @@ const tabs: TabState[] =[
 	{id: 2, title: "Change password", query: "password"}
 ]
 
-
 const Settings: NextPage = () => {
 
 	const router = useRouter()

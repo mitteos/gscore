@@ -8,22 +8,26 @@ import {Button} from "components/UI"
 import {CodeList} from "components/Code"
 import {SubscriptionsIsEmpty, SubscriptionsList} from "components/Subscription";
 import {SubscriptionState} from "components/Subscription/types";
+import Link from "next/link";
+
+const subscriptionsCollection: SubscriptionState[] = [
+	{id: 1, name: "Single site license", price: 77, date: "12.09.2022", status: "Active"},
+	{id: 2, name: "3 sites license", price: 177, date: "23.05.2021", status: "Active"},
+	{id: 3, name: "10 sites license", price: 233, date: "02.11.2022", status: "Active"},
+]
 
 const Subscriptions: NextPage = () => {
-
-	const subscriptionsCollection: SubscriptionState[] = [
-		{id: 1, name: "Single site license", price: 77, date: "12.09.2022", status: "Active"},
-		{id: 2, name: "3 sites license", price: 177, date: "23.05.2021", status: "Active"},
-		{id: 3, name: "10 sites license", price: 233, date: "02.11.2022", status: "Active"},
-	]
-
 	return (
 		<MainLayout>
 			<HeadComponent title="Gscore | My subscriptions" />
 			<Container>
 				<Header>
 					<Title>My subscriptions</Title>
-					{subscriptionsCollection.length ? <HeaderButton variant="primary">Upgrade</HeaderButton> : ""}
+					{subscriptionsCollection.length
+						? <Link href="/">
+							<a><HeaderButton variant="primary">Upgrade</HeaderButton></a>
+						</Link>
+						: ""}
 				</Header>
 			</Container>
 			{subscriptionsCollection.length

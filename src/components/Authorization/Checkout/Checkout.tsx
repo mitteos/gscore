@@ -3,11 +3,10 @@ import { TYPOGRAPHY } from "styles"
 import { Button } from "components/UI"
 import { useRouter } from "next/router"
 import { CheckoutList } from "components/Authorization/CheckoutList"
-import { useState } from "react"
+import React, { useState } from "react"
 import { CheckoutItemState } from "components/Authorization/types"
-import {NextPage} from "next";
 
-export const Checkout: NextPage = () => {
+export const Checkout: React.FC = () => {
 	
 	const {push} = useRouter()
 	const [isLoading, setIsLoading] = useState<boolean>(false)

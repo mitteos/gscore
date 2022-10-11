@@ -5,8 +5,9 @@ import { APP_COLORS, TYPOGRAPHY } from "styles"
 import { MainLayout } from "layouts"
 import { CardList } from "components/Card"
 import { HeadComponent } from "components/HeadComponent"
+import {NextPage} from "next";
 
-const Home = () => {
+const Home: NextPage = () => {
 	return (
 		<MainLayout>
 			<HeadComponent title="Gscore" />

@@ -17,6 +17,7 @@ interface InputProps<T extends FieldValues> {
 	maxLength?: number;
 	pattern?: PatternState;
 	isDisabled?: boolean;
+	className?: string;
 }
 interface Option {
 	value: number;
@@ -29,7 +30,7 @@ interface RegisterOptions {
 	pattern: PatternState | undefined;
 }
 
-export const Input = <T extends FieldValues>({isDisabled ,pattern, minLength, maxLength, type = "text", placeholder, register, name, errors, required = false}: InputProps<T>) => {
+export const Input = <T extends FieldValues>({className, isDisabled ,pattern, minLength, maxLength, type = "text", placeholder, register, name, errors, required = false}: InputProps<T>) => {
 
 	const registerOptions: RegisterOptions = {
 		required: required && "Required",
@@ -45,7 +46,7 @@ export const Input = <T extends FieldValues>({isDisabled ,pattern, minLength, ma
 	}
 
 	return (
-		<Container>
+		<Container className={className}>
 			<InputContainer>
 				<InputInner
 					placeholder={placeholder}

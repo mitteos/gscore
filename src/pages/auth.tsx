@@ -3,10 +3,11 @@ import { MainLayout } from "layouts"
 import { HeadComponent } from "components/HeadComponent"
 import styled from "styled-components"
 import { Checkout, LoginForm, ProgressBar, RegisterForm } from "components/Authorization"
+import {NextPage} from "next";
 
-const Auth = () => {
+const Auth: NextPage = () => {
 	
-	const [step, setStep] = useState<1 | 2 | 3>(1)
+	const [step, setStep] = useState<number>(1)
 	
 	return (
 		<MainLayout>

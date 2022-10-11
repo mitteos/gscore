@@ -3,8 +3,7 @@ import React, { useState } from "react"
 import styled from "styled-components"
 import { APP_COLORS, TYPOGRAPHY } from "styles"
 import { SubmitHandler, useForm } from "react-hook-form"
-import {NextPage} from "next";
-import {emailPattern} from "../../../utils/patterns";
+import { emailPattern } from "utils/patterns";
 
 interface RegisterFormProps {
 	setStep: (e: number) => void
@@ -15,7 +14,7 @@ interface RegisterFormInputs {
 	password: string;
 }
 
-export const RegisterForm: NextPage<RegisterFormProps> = ({setStep}) => {
+export const RegisterForm: React.FC<RegisterFormProps> = ({setStep}) => {
 	
 	const {register, handleSubmit, formState: {errors}} = useForm<RegisterFormInputs>()
 	const [isLoading, setIsLoading] = useState<boolean>(false)

@@ -32,7 +32,7 @@ export const HeaderNavigation: React.FC<HeaderNavigationProps> = ({mobileMenuIsO
 					/>
 					<Image src={LogoIcon} width={130} height={32}/>
 				</MobileNavigation>
-				<Link href="/">
+				<Link href="/subscriptions">
 					<HeaderLink>My subscriptions</HeaderLink>
 				</Link>
 				<HeaderLine />

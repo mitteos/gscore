@@ -4,11 +4,10 @@ import {MainLayout} from "layouts"
 import {HeadComponent} from "components/HeadComponent"
 import styled from "styled-components"
 import {APP_COLORS, TYPOGRAPHY} from "styles"
-import {Button} from "components/UI"
+import {LinkButton} from "components/UI"
 import {CodeList} from "components/Code"
-import {SubscriptionsIsEmpty, SubscriptionsList} from "components/Subscription";
-import {SubscriptionState} from "components/Subscription/types";
-import Link from "next/link";
+import {SubscriptionsIsEmpty, SubscriptionsList} from "components/Subscription"
+import {SubscriptionState} from "components/Subscription/types"
 
 const subscriptionsCollection: SubscriptionState[] = [
 	{id: 1, name: "Single site license", price: 77, date: "12.09.2022", status: "Active"},
@@ -23,11 +22,7 @@ const Subscriptions: NextPage = () => {
 			<Container>
 				<Header>
 					<Title>My subscriptions</Title>
-					{subscriptionsCollection.length
-						? <Link href="/">
-							<a><HeaderButton variant="primary">Upgrade</HeaderButton></a>
-						</Link>
-						: ""}
+					{!!subscriptionsCollection.length && <HeaderButton href="/" variant="primary">Upgrade</HeaderButton>}
 				</Header>
 			</Container>
 			{subscriptionsCollection.length
@@ -65,7 +60,7 @@ const Title = styled.h1`
     ${TYPOGRAPHY.specialHeading4};
   }
 `
-const HeaderButton = styled(Button)`
+const HeaderButton = styled(LinkButton)`
 	width: 152px;
   @media (max-width: 600px) {
     ${TYPOGRAPHY.single100Bold};

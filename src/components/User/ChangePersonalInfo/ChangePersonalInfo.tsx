@@ -2,9 +2,12 @@ import styled from "styled-components"
 import { TYPOGRAPHY } from "styles"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { Button, Input } from "components/UI"
-import React, { useState } from "react"
-import {NextPage} from "next";
-import {emailPattern} from "../../../utils/patterns";
+import React from "react"
+import { NextPage } from "next";
+import { emailPattern } from "utils/patterns";
+import { setUserToken } from "utils/api"
+import { useAppDispatch, useAppSelector } from "hooks/redux"
+import { userAsyncActions } from "store/features/user"
 
 interface FormInputs {
 	username: string;
@@ -12,16 +15,15 @@ interface FormInputs {
 }
 
 export const ChangePersonalInfo: NextPage = () => {
-	
-	const {register, handleSubmit, formState: {errors}} = useForm<FormInputs>()
-	const [isLoading, setIsLoading] = useState<boolean>(false)
-	
-	const changeInfo: SubmitHandler<FormInputs> = (data) => {
-		setIsLoading(true)
-		setTimeout(() => {
-			alert(data)
-			setIsLoading(false)
-		}, 3000)
+
+	const {user: userInfo, isLoading} = useAppSelector(state => state.user)
+	const {register, handleSubmit, formState: {errors}} = useForm<FormInputs>({defaultValues: {username: userInfo.username, email: userInfo.email}})
+	const dispatch = useAppDispatch()
+
+	const changeInfo: SubmitHandler<FormInputs> = async (formFields) => {
+		const {username, email} = formFields
+		setUserToken(userInfo.token ?? "")
+		dispatch(userAsyncActions.changeInfo({email, username}))
 	}
 	
 	return (

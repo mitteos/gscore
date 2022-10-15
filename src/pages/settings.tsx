@@ -8,6 +8,7 @@ import { NextPage } from "next"
 import {TabsList} from "components/UI"
 import {TabState} from "components/UI/types"
 import {useRouter} from "next/router"
+import {useAppSelector} from "../hooks/redux"
 
 const tabs: TabState[] =[
 	{id: 1, title: "Personal info", query: "personal-info"},
@@ -17,15 +18,19 @@ const tabs: TabState[] =[
 const Settings: NextPage = () => {
 
 	const router = useRouter()
+	const {user: userInfo} = useAppSelector(state => state.user)
 
 	useEffect(() => {
+		if(!userInfo.id) {
+			router.push("/auth")
+		}
 		if(!router.query.tab) {
 			router.push({
 				pathname: "/settings",
 				query: { tab: "personal-info" }
 			})
 		}
-	}, [])
+	}, [userInfo])
 	
 	return (
 		<MainLayout>

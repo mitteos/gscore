@@ -1,9 +1,12 @@
 import styled from "styled-components"
 import { TYPOGRAPHY } from "styles"
 import { SubmitHandler, useForm } from "react-hook-form"
-import React, { useState } from "react"
+import React from "react"
 import { Button, Input } from "components/UI"
-import {NextPage} from "next";
+import { NextPage } from "next"
+import { setUserToken } from "utils/api"
+import { useAppDispatch, useAppSelector } from "hooks/redux"
+import { userAsyncActions } from "store/features/user"
 
 interface FormInputs {
 	currentPassword: string;
@@ -13,14 +16,13 @@ interface FormInputs {
 export const ChangePassword: NextPage = () => {
 	
 	const {register, handleSubmit, formState: {errors}} = useForm<FormInputs>()
-	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const {user: userInfo, isLoading} = useAppSelector(state => state.user)
+	const dispatch = useAppDispatch()
 	
-	const changePassword: SubmitHandler<FormInputs> = (data) => {
-		setIsLoading(true)
-		setTimeout(() => {
-			alert(data)
-			setIsLoading(false)
-		}, 3000)
+	const changePassword: SubmitHandler<FormInputs> = (formFields) => {
+		setUserToken(userInfo.token ?? "")
+		const {newPassword, currentPassword} = formFields
+		dispatch(userAsyncActions.changePassword({newPassword, currentPassword}))
 	}
 	
 	return (
@@ -34,6 +36,7 @@ export const ChangePassword: NextPage = () => {
 					name="currentPassword"
 					errors={errors.currentPassword}
 					isDisabled={isLoading}
+					type="password"
 				/>
 				<Input
 					placeholder="New Password"
@@ -42,6 +45,7 @@ export const ChangePassword: NextPage = () => {
 					name="newPassword"
 					errors={errors.newPassword}
 					isDisabled={isLoading}
+					type="password"
 				/>
 				<FormButton
 					isLoading={isLoading}

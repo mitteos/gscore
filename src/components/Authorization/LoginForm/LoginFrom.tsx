@@ -1,9 +1,11 @@
 import styled from "styled-components"
 import { TYPOGRAPHY } from "styles"
 import { Button, Input } from "components/UI"
-import React, { useState } from "react"
+import React from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
-import {emailPattern} from "utils/patterns"
+import { emailPattern } from "utils/patterns"
+import {useAppDispatch, useAppSelector} from "hooks/redux"
+import { userAsyncActions } from "store/features/user"
 
 interface LoginFormProps {
 	setStep: (e: number) => void
@@ -16,15 +18,12 @@ interface LoginInputs {
 export const LoginForm: React.FC<LoginFormProps> = ({setStep}) => {
 	
 	const {register, handleSubmit, formState: {errors}} = useForm<LoginInputs>()
-	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const dispatch = useAppDispatch()
+	const {isLoading} = useAppSelector(state => state.user)
 	
-	const login: SubmitHandler<LoginInputs> = (data) => {
-		setIsLoading(true)
-		setTimeout(() => {
-			setIsLoading(false)
-			alert(JSON.stringify(data))
-			setStep(3)
-		}, 3000)
+	const login: SubmitHandler<LoginInputs> = (formFields) => {
+		const {email, password} = formFields
+		dispatch(userAsyncActions.login({email, password, setStep}))
 	}
 	
 	return (

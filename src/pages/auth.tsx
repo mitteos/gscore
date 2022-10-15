@@ -1,13 +1,19 @@
-import React, { useState } from "react"
+import React, {useEffect, useState} from "react"
 import { MainLayout } from "layouts"
 import { HeadComponent } from "components/HeadComponent"
 import styled from "styled-components"
 import { Checkout, LoginForm, ProgressBar, RegisterForm } from "components/Authorization"
-import {NextPage} from "next";
+import { NextPage } from "next"
+import { useAppSelector } from "hooks/redux"
+import { userSelectors } from "store/features/user"
 
 const Auth: NextPage = () => {
 	
 	const [step, setStep] = useState<number>(1)
+	const username = useAppSelector(userSelectors.getUsername)
+	useEffect(() => {
+		username ? setStep(3) : setStep(1)
+	}, [username])
 	
 	return (
 		<MainLayout>

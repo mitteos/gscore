@@ -1,9 +1,11 @@
 import { Button, Input } from "components/UI"
-import React, { useState } from "react"
+import React from "react"
 import styled from "styled-components"
 import { APP_COLORS, TYPOGRAPHY } from "styles"
 import { SubmitHandler, useForm } from "react-hook-form"
-import { emailPattern } from "utils/patterns";
+import { emailPattern } from "utils/patterns"
+import { useAppDispatch, useAppSelector } from "hooks/redux"
+import { userAsyncActions } from "store/features/user"
 
 interface RegisterFormProps {
 	setStep: (e: number) => void
@@ -17,22 +19,19 @@ interface RegisterFormInputs {
 export const RegisterForm: React.FC<RegisterFormProps> = ({setStep}) => {
 	
 	const {register, handleSubmit, formState: {errors}} = useForm<RegisterFormInputs>()
-	const [isLoading, setIsLoading] = useState<boolean>(false)
-	
-	const createNewAccount: SubmitHandler<RegisterFormInputs> = (data) => {
-		setIsLoading(true)
-		setTimeout(() => {
-			setIsLoading(false)
-			alert(JSON.stringify(data))
-			setStep(2)
-		}, 3000)
+	const {isLoading} = useAppSelector(state => state.user)
+	const dispatch = useAppDispatch()
+
+	const createAccount: SubmitHandler<RegisterFormInputs> = (formFields) => {
+		const {username, password, email} = formFields
+		dispatch(userAsyncActions.register({username, password, email, setStep}))
 	}
 	
 	return (
 		<>
 			<Title>Create account</Title>
 			<Subtitle>You need to enter your name and email. We will send you a temporary password by email</Subtitle>
-			<CreateAccountForm onSubmit={handleSubmit(createNewAccount)}>
+			<CreateAccountForm onSubmit={handleSubmit(createAccount)}>
 				<Input
 					placeholder="Username"
 					name="username"

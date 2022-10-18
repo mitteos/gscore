@@ -19,7 +19,7 @@ export const Header = () => {
 						<Image src={LogoIcon} width={170} height={42}/>
 					</a>
 				</Link>
-				{!!user.id &&
+				{!!user?.id &&
 						<>
 							<HeaderNavigation
 								mobileMenuIsOpen={mobileMenuIsOpen}

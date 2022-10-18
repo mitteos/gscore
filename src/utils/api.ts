@@ -2,17 +2,16 @@ import axios from "axios"
 
 const API_URL = "https://gscore-back.herokuapp.com/api/"
 
-const $query = axios.create({
+export const $query = axios.create({
 	baseURL: API_URL
 })
-const $authQuery = axios.create({
-	baseURL: API_URL,
 
-})
-
-export const setUserToken = (token: string) => $authQuery.interceptors.request.use((config) => {
-	config.headers!.Authorization = `Bearer ${token}`
+$query.interceptors.request.use((config) => {
+	const user = localStorage.getItem("persist:root")
+	if(user) {
+		const userInner = JSON.parse(user)
+		const userToken: string = JSON.parse(userInner.user)?.user?.token
+		config.headers!.Authorization = `Bearer ${userToken}`
+	}
 	return config
 })
-
-export {$query, $authQuery}

@@ -1,11 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
-import { $authQuery, $query } from "utils/api"
+import { $query } from "utils/api"
 import { UserSignInState, UserState } from "./types"
+import { AxiosError } from "axios"
 
 interface UserLoginProps {
 	email: string;
 	password: string;
-	setStep: (e: number) => void;
 }
 interface UserRegisterProps extends UserLoginProps{
 	username: string;
@@ -21,37 +21,61 @@ interface UserPassword {
 
 export const login = createAsyncThunk<UserSignInState, UserLoginProps>(
 	"user/userLogin",
-	async (userData) => {
-		const {email, password, setStep} = userData
-		const {data} = await $query.post("users/sign-in", {email, password})
-		setStep(3)
-		return data
+	async (userData, {rejectWithValue}) => {
+		try {
+			const {email, password} = userData
+			const {data} = await $query.post("users/sign-in", {email, password})
+			return data
+		} catch (e) {
+			if(e instanceof AxiosError) {
+				return rejectWithValue(e.response?.data.message)
+			}
+		}
 	}
 )
+
 export const register = createAsyncThunk<UserRegisterProps, UserRegisterProps>(
 	"user/userRegister",
-	async (userData) => {
-		const {email, password, username, setStep} = userData
-		const {data} = await $query.post("users/sign-up", {email, username, password})
-		setStep(2)
-		return data
+	async (userData, {rejectWithValue}) => {
+		try {
+			const {email, password, username} = userData
+			const {data} = await $query.post("users/sign-up", {email, username, password})
+			return data
+		} catch (e) {
+			if(e instanceof AxiosError) {
+				return rejectWithValue(e.response?.data.message)
+			}
+		}
 	}
 )
 
 export const changeInfo = createAsyncThunk<UserState, UserPersonalInfo>(
 	"user/userChangeInfo",
-	async (userData) => {
-		const {email, username} = userData
-		const {data} = await $authQuery.patch("users", {email, username})
-		return data
+	async (userData, {rejectWithValue}) => {
+		try {
+			const {email, username} = userData
+			const {data} = await $query.patch("users", {email, username})
+			return data
+		} catch (e) {
+			if(e instanceof AxiosError) {
+				return rejectWithValue(e.response?.data.message)
+			}
+		}
 	}
 )
 
 export const changePassword = createAsyncThunk<UserState, UserPassword>(
 	"user/userChangePassword",
-	async (userData) => {
-		const {newPassword, currentPassword} = userData
-		const {data} = await $authQuery.patch("users/update-password", {currentPassword, newPassword})
-		return data
+	async (userData, {rejectWithValue}) => {
+		try {
+			const {newPassword, currentPassword} = userData
+			const {data} = await $query.patch("users/update-password", {currentPassword, newPassword})
+			return data
+		} catch (e) {
+			if(e instanceof AxiosError) {
+				return rejectWithValue(e.response?.data.message)
+			}
+		}
+
 	}
 )

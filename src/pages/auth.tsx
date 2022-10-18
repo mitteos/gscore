@@ -1,28 +1,31 @@
-import React, {useEffect, useState} from "react"
+import React, {useEffect} from "react"
 import { MainLayout } from "layouts"
 import { HeadComponent } from "components/HeadComponent"
 import styled from "styled-components"
 import { Checkout, LoginForm, ProgressBar, RegisterForm } from "components/Authorization"
 import { NextPage } from "next"
-import { useAppSelector } from "hooks/redux"
-import { userSelectors } from "store/features/user"
+import {useAppDispatch, useAppSelector} from "hooks/redux"
+import {userActions} from "../store/features/user";
 
 const Auth: NextPage = () => {
-	
-	const [step, setStep] = useState<number>(1)
-	const username = useAppSelector(userSelectors.getUsername)
+
+	const {authStep, user} = useAppSelector(state => state.user)
+	const dispatch = useAppDispatch()
+
 	useEffect(() => {
-		username ? setStep(3) : setStep(1)
-	}, [username])
+		if(!user?.id) {
+			dispatch(userActions.setStep(1))
+		}
+	}, [])
 	
 	return (
 		<MainLayout>
 			<HeadComponent title="Gscore | Authorize"/>
 			<Container>
-				<ProgressBar step={step}/>
-				{step === 1 && <RegisterForm setStep={setStep} />}
-				{step === 2 && <LoginForm setStep={setStep} />}
-				{step === 3 && <Checkout />}
+				<ProgressBar step={authStep}/>
+				{authStep === 1 && <RegisterForm />}
+				{authStep === 2 && <LoginForm />}
+				{authStep === 3 && <Checkout />}
 			</Container>
 		</MainLayout>
 	)

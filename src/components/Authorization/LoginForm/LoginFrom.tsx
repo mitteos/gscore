@@ -7,15 +7,12 @@ import { emailPattern } from "utils/patterns"
 import {useAppDispatch, useAppSelector} from "hooks/redux"
 import { userAsyncActions } from "store/features/user"
 
-interface LoginFormProps {
-	setStep: (e: number) => void
-}
 interface LoginInputs {
 	email: string;
 	password: string;
 }
 
-export const LoginForm: React.FC<LoginFormProps> = ({setStep}) => {
+export const LoginForm: React.FC = () => {
 	
 	const {register, handleSubmit, formState: {errors}} = useForm<LoginInputs>()
 	const dispatch = useAppDispatch()
@@ -23,7 +20,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({setStep}) => {
 	
 	const login: SubmitHandler<LoginInputs> = (formFields) => {
 		const {email, password} = formFields
-		dispatch(userAsyncActions.login({email, password, setStep}))
+		dispatch(userAsyncActions.login({email, password}))
 	}
 	
 	return (

@@ -5,18 +5,15 @@ import { APP_COLORS, TYPOGRAPHY } from "styles"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { emailPattern } from "utils/patterns"
 import { useAppDispatch, useAppSelector } from "hooks/redux"
-import { userAsyncActions } from "store/features/user"
+import {userActions, userAsyncActions} from "store/features/user"
 
-interface RegisterFormProps {
-	setStep: (e: number) => void
-}
 interface RegisterFormInputs {
 	username: string;
 	email: string;
 	password: string;
 }
 
-export const RegisterForm: React.FC<RegisterFormProps> = ({setStep}) => {
+export const RegisterForm: React.FC = () => {
 	
 	const {register, handleSubmit, formState: {errors}} = useForm<RegisterFormInputs>()
 	const {isLoading} = useAppSelector(state => state.user)
@@ -24,7 +21,10 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({setStep}) => {
 
 	const createAccount: SubmitHandler<RegisterFormInputs> = (formFields) => {
 		const {username, password, email} = formFields
-		dispatch(userAsyncActions.register({username, password, email, setStep}))
+		dispatch(userAsyncActions.register({username, password, email}))
+	}
+	const changeStep = () => {
+		dispatch(userActions.setStep(2))
 	}
 	
 	return (
@@ -63,7 +63,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({setStep}) => {
 			</CreateAccountForm>
 			<AdditionContainer>
 				<AdditionText>Have an account?</AdditionText>
-				<AdditionButton onClick={() => setStep(2)}>Go to the next step</AdditionButton>
+				<AdditionButton onClick={changeStep}>Go to the next step</AdditionButton>
 			</AdditionContainer>
 		</>
 	)

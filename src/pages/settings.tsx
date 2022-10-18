@@ -8,7 +8,7 @@ import { NextPage } from "next"
 import {TabsList} from "components/UI"
 import {TabState} from "components/UI/types"
 import {useRouter} from "next/router"
-import {useAppSelector} from "../hooks/redux"
+import {withAuth} from "hocs"
 
 const tabs: TabState[] =[
 	{id: 1, title: "Personal info", query: "personal-info"},
@@ -18,20 +18,16 @@ const tabs: TabState[] =[
 const Settings: NextPage = () => {
 
 	const router = useRouter()
-	const {user: userInfo} = useAppSelector(state => state.user)
 
 	useEffect(() => {
-		if(!userInfo.id) {
-			router.push("/auth")
-		}
 		if(!router.query.tab) {
 			router.push({
 				pathname: "/settings",
 				query: { tab: "personal-info" }
 			})
 		}
-	}, [userInfo])
-	
+	}, [])
+
 	return (
 		<MainLayout>
 			<HeadComponent title="Gscore | Settings" />
@@ -48,7 +44,7 @@ const Settings: NextPage = () => {
 	)
 }
 
-export default Settings
+export default withAuth(Settings)
 
 const Container = styled.div`
   width: 85%;

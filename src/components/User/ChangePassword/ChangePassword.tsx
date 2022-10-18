@@ -4,7 +4,6 @@ import { SubmitHandler, useForm } from "react-hook-form"
 import React from "react"
 import { Button, Input } from "components/UI"
 import { NextPage } from "next"
-import { setUserToken } from "utils/api"
 import { useAppDispatch, useAppSelector } from "hooks/redux"
 import { userAsyncActions } from "store/features/user"
 
@@ -16,11 +15,10 @@ interface FormInputs {
 export const ChangePassword: NextPage = () => {
 	
 	const {register, handleSubmit, formState: {errors}} = useForm<FormInputs>()
-	const {user: userInfo, isLoading} = useAppSelector(state => state.user)
+	const {isLoading} = useAppSelector(state => state.user)
 	const dispatch = useAppDispatch()
 	
 	const changePassword: SubmitHandler<FormInputs> = (formFields) => {
-		setUserToken(userInfo.token ?? "")
 		const {newPassword, currentPassword} = formFields
 		dispatch(userAsyncActions.changePassword({newPassword, currentPassword}))
 	}

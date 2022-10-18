@@ -1,4 +1,4 @@
-import React, {useEffect} from "react"
+import React from "react"
 import {NextPage} from "next"
 import {MainLayout} from "layouts"
 import {HeadComponent} from "components/HeadComponent"
@@ -8,8 +8,7 @@ import {LinkButton} from "components/UI"
 import {CodeList} from "components/Code"
 import {SubscriptionsIsEmpty, SubscriptionsList} from "components/Subscription"
 import {SubscriptionState} from "components/Subscription/types"
-import {useAppSelector} from "hooks/redux"
-import {useRouter} from "next/router"
+import { withAuth } from "hocs"
 
 const subscriptionsCollection: SubscriptionState[] = [
 	{id: 1, name: "Single site license", price: 77, date: "12.09.2022", status: "Active"},
@@ -18,17 +17,6 @@ const subscriptionsCollection: SubscriptionState[] = [
 ]
 
 const Subscriptions: NextPage = () => {
-
-	const {user: userInfo} = useAppSelector(state => state.user)
-	const router = useRouter()
-
-	useEffect(() => {
-		if(!userInfo.id) {
-			router.push("/auth")
-		}
-	}, [userInfo]);
-
-
 	return (
 		<MainLayout>
 			<HeadComponent title="Gscore | My subscriptions" />
@@ -51,7 +39,7 @@ const Subscriptions: NextPage = () => {
 	)
 }
 
-export default Subscriptions;
+export default withAuth(Subscriptions);
 
 const Container = styled.div`
   width: 85%;

@@ -5,7 +5,7 @@ import Image from "next/image"
 import { APP_COLORS, TYPOGRAPHY } from "styles"
 import { LowArrowIcon, SettingsIcon, LogoutIcon, CloseIcon, LogoIcon } from "assets/svg"
 import {useAppDispatch, useAppSelector} from "hooks/redux"
-import {userActions, userSelectors} from "store/features/user"
+import { userActions } from "store/features/user"
 
 interface HeaderNavigationProps {
 	mobileMenuIsOpen: boolean;
@@ -15,7 +15,7 @@ interface HeaderNavigationProps {
 export const HeaderNavigation: React.FC<HeaderNavigationProps> = ({mobileMenuIsOpen, setMobileMenuIsOpen}) => {
 	
 	const [profileIsOpen, setProfileIsOpen] = useState<boolean>(false)
-	const username = useAppSelector(userSelectors.getUsername)
+	const {user} = useAppSelector(state => state.user)
 	const dispatch = useAppDispatch()
 
 	const logout = () => {
@@ -45,7 +45,7 @@ export const HeaderNavigation: React.FC<HeaderNavigationProps> = ({mobileMenuIsO
 				</Link>
 				<HeaderLine />
 				<ProfileContainer onClick={() => setProfileIsOpen(!profileIsOpen)}>
-					<HeaderText>{username}</HeaderText>
+					<HeaderText>{user?.username}</HeaderText>
 					<ProfileIcon
 						src={LowArrowIcon}
 						width={14}

@@ -29,6 +29,8 @@ export const login = createAsyncThunk<UserSignInState, UserLoginProps>(
 		} catch (e) {
 			if(e instanceof AxiosError) {
 				return rejectWithValue(e.response?.data.message)
+			} else {
+				return rejectWithValue("Unknown error")
 			}
 		}
 	}
@@ -44,6 +46,8 @@ export const register = createAsyncThunk<UserRegisterProps, UserRegisterProps>(
 		} catch (e) {
 			if(e instanceof AxiosError) {
 				return rejectWithValue(e.response?.data.message)
+			} else {
+				return rejectWithValue("Unknown error")
 			}
 		}
 	}
@@ -59,6 +63,8 @@ export const changeInfo = createAsyncThunk<UserState, UserPersonalInfo>(
 		} catch (e) {
 			if(e instanceof AxiosError) {
 				return rejectWithValue(e.response?.data.message)
+			} else {
+				return rejectWithValue("Unknown error")
 			}
 		}
 	}
@@ -74,8 +80,9 @@ export const changePassword = createAsyncThunk<UserState, UserPassword>(
 		} catch (e) {
 			if(e instanceof AxiosError) {
 				return rejectWithValue(e.response?.data.message)
+			} else {
+				return rejectWithValue("Unknown error")
 			}
 		}
-
 	}
 )

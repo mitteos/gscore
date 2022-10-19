@@ -6,6 +6,7 @@ import { SubmitHandler, useForm } from "react-hook-form"
 import { emailPattern } from "utils/patterns"
 import {useAppDispatch, useAppSelector} from "hooks/redux"
 import { userAsyncActions } from "store/features/user"
+import { useRouter } from "next/router"
 
 interface LoginInputs {
 	email: string;
@@ -17,10 +18,21 @@ export const LoginForm: React.FC = () => {
 	const {register, handleSubmit, formState: {errors}} = useForm<LoginInputs>()
 	const dispatch = useAppDispatch()
 	const {isLoading} = useAppSelector(state => state.user)
+	const {push} = useRouter()
 	
 	const login: SubmitHandler<LoginInputs> = (formFields) => {
 		const {email, password} = formFields
 		dispatch(userAsyncActions.login({email, password}))
+			.then(async (res) => {
+				if(res.meta.requestStatus === "fulfilled") {
+					await push({
+						pathname: "/auth",
+						query: {
+							step: "checkout"
+						}
+					})
+				}
+			})
 	}
 	
 	return (

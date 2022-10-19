@@ -4,28 +4,31 @@ import { HeadComponent } from "components/HeadComponent"
 import styled from "styled-components"
 import { Checkout, LoginForm, ProgressBar, RegisterForm } from "components/Authorization"
 import { NextPage } from "next"
-import {useAppDispatch, useAppSelector} from "hooks/redux"
-import {userActions} from "../store/features/user";
+import { useAppSelector } from "hooks/redux"
+import { useRouter } from "next/router"
 
 const Auth: NextPage = () => {
 
-	const {authStep, user} = useAppSelector(state => state.user)
-	const dispatch = useAppDispatch()
+	const {user} = useAppSelector(state => state.user)
+	const router = useRouter()
 
 	useEffect(() => {
-		if(!user?.id) {
-			dispatch(userActions.setStep(1))
-		}
-	}, [])
+		router.push({
+			pathname: "/auth",
+			query: {
+				step: user?.id ? "checkout" : "sign-up"
+			}
+		})
+	}, [user])
 	
 	return (
 		<MainLayout>
 			<HeadComponent title="Gscore | Authorize"/>
 			<Container>
-				<ProgressBar step={authStep}/>
-				{authStep === 1 && <RegisterForm />}
-				{authStep === 2 && <LoginForm />}
-				{authStep === 3 && <Checkout />}
+				<ProgressBar />
+				{router.query.step === "sign-up" && <RegisterForm />}
+				{router.query.step === "sign-in" && <LoginForm />}
+				{router.query.step === "checkout" && <Checkout />}
 			</Container>
 		</MainLayout>
 	)

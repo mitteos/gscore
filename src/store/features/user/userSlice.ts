@@ -1,19 +1,17 @@
-import {createSlice, isAnyOf, PayloadAction} from "@reduxjs/toolkit"
+import { createSlice, isAnyOf } from "@reduxjs/toolkit"
 import { UserState } from "./types"
 import { userAsyncActions } from "./"
 
 interface InitialState {
 	isLoading: boolean;
 	error?: string | unknown;
-	user: UserState | null
-	authStep: number;
+	user: UserState | null;
 }
 
 const initialState: InitialState = {
 	isLoading: false,
 	error: "",
-	user: null,
-	authStep: 1
+	user: null
 }
 
 const userSlice = createSlice(({
@@ -21,11 +19,7 @@ const userSlice = createSlice(({
 	initialState,
 	reducers: {
 		userLogout(state) {
-			state.user = {} as UserState
-			state.authStep = 1
-		},
-		setStep(state, action: PayloadAction<number>) {
-			state.authStep = action.payload
+			state.user = null
 		}
 	},
 	extraReducers: (builder) => {
@@ -35,11 +29,9 @@ const userSlice = createSlice(({
 				token: action.payload.token,
 				...action.payload.user
 			}
-			state.authStep = 3
 		})
 		builder.addCase(userAsyncActions.register.fulfilled, (state) => {
 			state.isLoading = false
-			state.authStep = 2
 		})
 		builder.addCase(userAsyncActions.changeInfo.fulfilled, (state, action) => {
 			state.user = {

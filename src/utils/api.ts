@@ -1,4 +1,5 @@
 import axios from "axios"
+import { store } from "store/store"
 
 const API_URL = "https://gscore-back.herokuapp.com/api/"
 
@@ -7,11 +8,7 @@ export const $query = axios.create({
 })
 
 $query.interceptors.request.use((config) => {
-	const user = localStorage.getItem("persist:root")
-	if(user) {
-		const userInner = JSON.parse(user)
-		const userToken: string = JSON.parse(userInner.user)?.user?.token
-		config.headers!.Authorization = `Bearer ${userToken}`
-	}
+	const {user} = store.getState()
+	config.headers!.Authorization = `Bearer ${user.user?.token ?? ""}`
 	return config
 })

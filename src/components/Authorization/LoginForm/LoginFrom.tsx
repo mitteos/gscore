@@ -23,9 +23,9 @@ export const LoginForm: React.FC = () => {
 	const login: SubmitHandler<LoginInputs> = (formFields) => {
 		const {email, password} = formFields
 		dispatch(userAsyncActions.login({email, password}))
-			.then(async (res) => {
+			.then( (res) => {
 				if(res.meta.requestStatus === "fulfilled") {
-					await push({
+					push({
 						pathname: "/auth",
 						query: {
 							step: "checkout"

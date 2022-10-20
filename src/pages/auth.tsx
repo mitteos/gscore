@@ -7,6 +7,12 @@ import { NextPage } from "next"
 import { useAppSelector } from "hooks/redux"
 import { useRouter } from "next/router"
 
+const progressItems = [
+	{id: 1, title: "Create account", query: "sign-up"},
+	{id: 2, title: "Log in", query: "sign-in"},
+	{id: 3, title: "Checkout", query: "checkout"},
+]
+
 const Auth: NextPage = () => {
 
 	const {user} = useAppSelector(state => state.user)
@@ -25,7 +31,7 @@ const Auth: NextPage = () => {
 		<MainLayout>
 			<HeadComponent title="Gscore | Authorize"/>
 			<Container>
-				<ProgressBar />
+				<ProgressBar progressItems={progressItems} />
 				{router.query.step === "sign-up" && <RegisterForm />}
 				{router.query.step === "sign-in" && <LoginForm />}
 				{router.query.step === "checkout" && <Checkout />}

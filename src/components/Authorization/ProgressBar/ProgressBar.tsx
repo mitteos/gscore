@@ -3,13 +3,17 @@ import styled from "styled-components"
 import { ProgressItem } from "components/Authorization/ProgressItem"
 import { useRouter } from "next/router"
 
-const progressItems = [
-	{id: 1, title: "Create account", query: "sign-up"},
-	{id: 2, title: "Log in", query: "sign-in"},
-	{id: 3, title: "Checkout", query: "checkout"},
-]
 
-export const ProgressBar: React.FC = () => {
+interface ProgressItemState {
+	id: number;
+	title: string;
+	query: string;
+}
+interface ProgressBarProps {
+	progressItems: ProgressItemState[];
+}
+
+export const ProgressBar: React.FC<ProgressBarProps> = ({progressItems}) => {
 
 	const router = useRouter()
 

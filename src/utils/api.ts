@@ -9,6 +9,8 @@ export const $query = axios.create({
 
 $query.interceptors.request.use((config) => {
 	const {user} = store.getState()
-	config.headers!.Authorization = `Bearer ${user.user?.token ?? ""}`
+	if(user.user?.token) {
+		config.headers!.Authorization = `Bearer ${user.user?.token}`
+	}
 	return config
 })

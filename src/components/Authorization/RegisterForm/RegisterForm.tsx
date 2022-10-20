@@ -24,9 +24,9 @@ export const RegisterForm: React.FC = () => {
 	const createAccount: SubmitHandler<RegisterFormInputs> = (formFields) => {
 		const {username, password, email} = formFields
 		dispatch(userAsyncActions.register({username, password, email}))
-			.then(async (res) => {
+			.then((res) => {
 				if(res.meta.requestStatus === "fulfilled") {
-					await push({
+					push({
 						pathname: "/auth",
 						query: {
 							step: "sign-in"
@@ -35,8 +35,8 @@ export const RegisterForm: React.FC = () => {
 				}
 			})
 	}
-	const goToLogin = async () => {
-		await push({
+	const goToLogin = () => {
+		push({
 			pathname: "/auth",
 			query: {
 				step: "sign-in"

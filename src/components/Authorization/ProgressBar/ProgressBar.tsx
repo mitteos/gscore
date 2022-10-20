@@ -1,23 +1,36 @@
-import React, { useState } from "react"
+import React, {useEffect, useState} from "react"
 import styled from "styled-components"
 import { ProgressItem } from "components/Authorization/ProgressItem"
+import { useRouter } from "next/router"
 
+
+interface ProgressItemState {
+	id: number;
+	title: string;
+	query: string;
+}
 interface ProgressBarProps {
-	step: number;
+	progressItems: ProgressItemState[];
 }
 
-export const ProgressBar: React.FC<ProgressBarProps> = ({step}) => {
-	
-	const [progressItems, setProgressItems] = useState([
-		{id: 1, title: "Create account"},
-		{id: 2, title: "Log in"},
-		{id: 3, title: "Checkout"},
-	])
-	
+export const ProgressBar: React.FC<ProgressBarProps> = ({progressItems}) => {
+
+	const router = useRouter()
+
+	const [activeId, setActiveId] = useState<number>(1)
+
+	useEffect(() => {
+		setActiveId(progressItems.find(el => el.query === router.query.step)?.id ?? 1)
+	}, [router.query.step])
+
 	return (
 		<ProgressBarContainer>
 			{progressItems.map(item =>
-				<ProgressItem key={item.id} itemInfo={item} isActive={item.id <= step}/>
+				<ProgressItem
+					key={item.id}
+					itemInfo={item}
+					isActive={item.id <= activeId}
+				/>
 			)}
 		</ProgressBarContainer>
 	)

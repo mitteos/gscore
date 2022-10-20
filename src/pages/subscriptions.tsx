@@ -8,6 +8,7 @@ import {LinkButton} from "components/UI"
 import {CodeList} from "components/Code"
 import {SubscriptionsIsEmpty, SubscriptionsList} from "components/Subscription"
 import {SubscriptionState} from "components/Subscription/types"
+import { withAuth } from "hocs"
 
 const subscriptionsCollection: SubscriptionState[] = [
 	{id: 1, name: "Single site license", price: 77, date: "12.09.2022", status: "Active"},
@@ -38,7 +39,7 @@ const Subscriptions: NextPage = () => {
 	)
 }
 
-export default Subscriptions;
+export default withAuth(Subscriptions);
 
 const Container = styled.div`
   width: 85%;

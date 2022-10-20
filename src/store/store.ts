@@ -9,11 +9,12 @@ import {
 	REGISTER,
 } from "redux-persist"
 import storage from "redux-persist/lib/storage"
-import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit"
+import { userReducer } from "store/features/user"
 
 
 const rootReducer = combineReducers({
-
+	user: userReducer
 })
 
 const persistConfig = {

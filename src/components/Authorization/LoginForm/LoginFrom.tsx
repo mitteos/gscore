@@ -1,30 +1,38 @@
 import styled from "styled-components"
 import { TYPOGRAPHY } from "styles"
 import { Button, Input } from "components/UI"
-import React, { useState } from "react"
+import React from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
-import {emailPattern} from "utils/patterns"
+import { emailPattern } from "utils/patterns"
+import {useAppDispatch, useAppSelector} from "hooks/redux"
+import { userAsyncActions } from "store/features/user"
+import { useRouter } from "next/router"
 
-interface LoginFormProps {
-	setStep: (e: number) => void
-}
 interface LoginInputs {
 	email: string;
 	password: string;
 }
 
-export const LoginForm: React.FC<LoginFormProps> = ({setStep}) => {
+export const LoginForm: React.FC = () => {
 	
 	const {register, handleSubmit, formState: {errors}} = useForm<LoginInputs>()
-	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const dispatch = useAppDispatch()
+	const {isLoading} = useAppSelector(state => state.user)
+	const {push} = useRouter()
 	
-	const login: SubmitHandler<LoginInputs> = (data) => {
-		setIsLoading(true)
-		setTimeout(() => {
-			setIsLoading(false)
-			alert(JSON.stringify(data))
-			setStep(3)
-		}, 3000)
+	const login: SubmitHandler<LoginInputs> = (formFields) => {
+		const {email, password} = formFields
+		dispatch(userAsyncActions.login({email, password}))
+			.then( (res) => {
+				if(res.meta.requestStatus === "fulfilled") {
+					push({
+						pathname: "/auth",
+						query: {
+							step: "checkout"
+						}
+					})
+				}
+			})
 	}
 	
 	return (

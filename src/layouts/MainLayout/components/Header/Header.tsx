@@ -4,11 +4,13 @@ import Link from "next/link"
 import { useState } from "react"
 import { HeaderNavigation } from "layouts/MainLayout/components"
 import { LogoIcon, MobileMenuIcon } from "assets/svg"
+import { useAppSelector } from "hooks/redux"
 
 export const Header = () => {
 	
 	const [mobileMenuIsOpen, setMobileMenuIsOpen] = useState<boolean>(false)
-	
+	const {user} = useAppSelector(state => state.user)
+
 	return (
 		<HeaderContainer>
 			<HeaderInner>
@@ -17,17 +19,21 @@ export const Header = () => {
 						<Image src={LogoIcon} width={170} height={42}/>
 					</a>
 				</Link>
-				<HeaderNavigation
-					mobileMenuIsOpen={mobileMenuIsOpen}
-					setMobileMenuIsOpen={setMobileMenuIsOpen}
-				/>
-				<MenuButton onClick={() => setMobileMenuIsOpen(true)}>
-					<Image
-						src={MobileMenuIcon}
-						width={24}
-						height={24}
-					/>
-				</MenuButton>
+				{!!user?.id &&
+						<>
+							<HeaderNavigation
+								mobileMenuIsOpen={mobileMenuIsOpen}
+								setMobileMenuIsOpen={setMobileMenuIsOpen}
+							/>
+							<MenuButton onClick={() => setMobileMenuIsOpen(true)}>
+							<Image
+							src={MobileMenuIcon}
+							width={24}
+							height={24}
+							/>
+							</MenuButton>
+            </>
+				}
 			</HeaderInner>
 		</HeaderContainer>
 	);

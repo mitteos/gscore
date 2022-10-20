@@ -1,38 +1,54 @@
 import { Button, Input } from "components/UI"
-import React, { useState } from "react"
+import React from "react"
 import styled from "styled-components"
 import { APP_COLORS, TYPOGRAPHY } from "styles"
 import { SubmitHandler, useForm } from "react-hook-form"
-import { emailPattern } from "utils/patterns";
+import { emailPattern } from "utils/patterns"
+import { useAppDispatch, useAppSelector } from "hooks/redux"
+import { userAsyncActions } from "store/features/user"
+import { useRouter } from "next/router"
 
-interface RegisterFormProps {
-	setStep: (e: number) => void
-}
 interface RegisterFormInputs {
 	username: string;
 	email: string;
 	password: string;
 }
 
-export const RegisterForm: React.FC<RegisterFormProps> = ({setStep}) => {
+export const RegisterForm: React.FC = () => {
 	
 	const {register, handleSubmit, formState: {errors}} = useForm<RegisterFormInputs>()
-	const [isLoading, setIsLoading] = useState<boolean>(false)
-	
-	const createNewAccount: SubmitHandler<RegisterFormInputs> = (data) => {
-		setIsLoading(true)
-		setTimeout(() => {
-			setIsLoading(false)
-			alert(JSON.stringify(data))
-			setStep(2)
-		}, 3000)
+	const {isLoading} = useAppSelector(state => state.user)
+	const dispatch = useAppDispatch()
+	const {push} = useRouter()
+
+	const createAccount: SubmitHandler<RegisterFormInputs> = (formFields) => {
+		const {username, password, email} = formFields
+		dispatch(userAsyncActions.register({username, password, email}))
+			.then((res) => {
+				if(res.meta.requestStatus === "fulfilled") {
+					push({
+						pathname: "/auth",
+						query: {
+							step: "sign-in"
+						}
+					})
+				}
+			})
+	}
+	const goToLogin = () => {
+		push({
+			pathname: "/auth",
+			query: {
+				step: "sign-in"
+			}
+		})
 	}
 	
 	return (
 		<>
 			<Title>Create account</Title>
 			<Subtitle>You need to enter your name and email. We will send you a temporary password by email</Subtitle>
-			<CreateAccountForm onSubmit={handleSubmit(createNewAccount)}>
+			<CreateAccountForm onSubmit={handleSubmit(createAccount)}>
 				<Input
 					placeholder="Username"
 					name="username"
@@ -64,7 +80,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({setStep}) => {
 			</CreateAccountForm>
 			<AdditionContainer>
 				<AdditionText>Have an account?</AdditionText>
-				<AdditionButton onClick={() => setStep(2)}>Go to the next step</AdditionButton>
+				<AdditionButton onClick={goToLogin}>Go to the next step</AdditionButton>
 			</AdditionContainer>
 		</>
 	)

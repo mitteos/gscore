@@ -8,6 +8,7 @@ import { NextPage } from "next"
 import {TabsList} from "components/UI"
 import {TabState} from "components/UI/types"
 import {useRouter} from "next/router"
+import {withAuth} from "hocs"
 
 const tabs: TabState[] =[
 	{id: 1, title: "Personal info", query: "personal-info"},
@@ -26,7 +27,7 @@ const Settings: NextPage = () => {
 			})
 		}
 	}, [])
-	
+
 	return (
 		<MainLayout>
 			<HeadComponent title="Gscore | Settings" />
@@ -43,7 +44,7 @@ const Settings: NextPage = () => {
 	)
 }
 
-export default Settings
+export default withAuth(Settings)
 
 const Container = styled.div`
   width: 85%;

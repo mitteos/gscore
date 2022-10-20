@@ -4,6 +4,8 @@ import Link from "next/link"
 import Image from "next/image"
 import { APP_COLORS, TYPOGRAPHY } from "styles"
 import { LowArrowIcon, SettingsIcon, LogoutIcon, CloseIcon, LogoIcon } from "assets/svg"
+import {useAppDispatch, useAppSelector} from "hooks/redux"
+import { userActions } from "store/features/user"
 
 interface HeaderNavigationProps {
 	mobileMenuIsOpen: boolean;
@@ -13,6 +15,12 @@ interface HeaderNavigationProps {
 export const HeaderNavigation: React.FC<HeaderNavigationProps> = ({mobileMenuIsOpen, setMobileMenuIsOpen}) => {
 	
 	const [profileIsOpen, setProfileIsOpen] = useState<boolean>(false)
+	const {user} = useAppSelector(state => state.user)
+	const dispatch = useAppDispatch()
+
+	const logout = () => {
+		dispatch(userActions.userLogout())
+	}
 	
 	return (
 		<NavigationContainer
@@ -37,7 +45,7 @@ export const HeaderNavigation: React.FC<HeaderNavigationProps> = ({mobileMenuIsO
 				</Link>
 				<HeaderLine />
 				<ProfileContainer onClick={() => setProfileIsOpen(!profileIsOpen)}>
-					<HeaderText>Alex</HeaderText>
+					<HeaderText>{user?.username}</HeaderText>
 					<ProfileIcon
 						src={LowArrowIcon}
 						width={14}
@@ -55,12 +63,10 @@ export const HeaderNavigation: React.FC<HeaderNavigationProps> = ({mobileMenuIsO
 							<HeaderText>Settings</HeaderText>
 						</NavigationLink>
 					</Link>
-					<Link href="/">
-						<NavigationLink>
-							<Image src={LogoutIcon} width={24} height={24} />
-							<HeaderText>Logout</HeaderText>
-						</NavigationLink>
-					</Link>
+					<NavigationLink onClick={logout}>
+						<Image src={LogoutIcon} width={24} height={24} />
+						<HeaderText>Logout</HeaderText>
+					</NavigationLink>
 				</ProfileNavigation>
 				<HeaderLine />
 			</NavigationInner>

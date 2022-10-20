@@ -1,22 +1,40 @@
-import React, { useState } from "react"
+import React, {useEffect} from "react"
 import { MainLayout } from "layouts"
 import { HeadComponent } from "components/HeadComponent"
 import styled from "styled-components"
 import { Checkout, LoginForm, ProgressBar, RegisterForm } from "components/Authorization"
-import {NextPage} from "next";
+import { NextPage } from "next"
+import { useAppSelector } from "hooks/redux"
+import { useRouter } from "next/router"
+
+const progressItems = [
+	{id: 1, title: "Create account", query: "sign-up"},
+	{id: 2, title: "Log in", query: "sign-in"},
+	{id: 3, title: "Checkout", query: "checkout"},
+]
 
 const Auth: NextPage = () => {
-	
-	const [step, setStep] = useState<number>(1)
+
+	const {user} = useAppSelector(state => state.user)
+	const router = useRouter()
+
+	useEffect(() => {
+		router.push({
+			pathname: "/auth",
+			query: {
+				step: user?.id ? "checkout" : "sign-up"
+			}
+		})
+	}, [user])
 	
 	return (
 		<MainLayout>
 			<HeadComponent title="Gscore | Authorize"/>
 			<Container>
-				<ProgressBar step={step}/>
-				{step === 1 && <RegisterForm setStep={setStep} />}
-				{step === 2 && <LoginForm setStep={setStep} />}
-				{step === 3 && <Checkout />}
+				<ProgressBar progressItems={progressItems} />
+				{router.query.step === "sign-up" && <RegisterForm />}
+				{router.query.step === "sign-in" && <LoginForm />}
+				{router.query.step === "checkout" && <Checkout />}
 			</Container>
 		</MainLayout>
 	)

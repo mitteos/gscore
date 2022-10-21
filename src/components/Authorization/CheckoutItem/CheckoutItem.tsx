@@ -2,20 +2,20 @@ import Image from "next/image"
 import { CartIcon } from "assets/svg"
 import styled from "styled-components"
 import { TYPOGRAPHY } from "styles"
-import { CheckoutItemState } from "components/Authorization/types"
 import React from "react"
+import { ProductState } from "store/features/subscription/types"
 
 interface CheckoutItemProps {
-	itemInfo: CheckoutItemState;
+	itemInfo: ProductState | null;
 	success: boolean;
 }
 
 export const CheckoutItem: React.FC<CheckoutItemProps> = ({itemInfo, success}) => {
 	return (
 		<CheckoutContainer>
-			<CheckoutItemText>{itemInfo.name}</CheckoutItemText>
+			<CheckoutItemText>{itemInfo?.name}</CheckoutItemText>
 			<CheckoutPriceContainer>
-				<CheckoutItemText>${itemInfo.price}</CheckoutItemText>
+				<CheckoutItemText>${itemInfo?.prices[0].price}</CheckoutItemText>
 				{!success && <Image src={CartIcon} />}
 			</CheckoutPriceContainer>
 		</CheckoutContainer>
@@ -23,16 +23,16 @@ export const CheckoutItem: React.FC<CheckoutItemProps> = ({itemInfo, success}) =
 }
 
 const CheckoutContainer= styled.div`
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   gap: 20px;
 `
 const CheckoutItemText = styled.p`
-	${TYPOGRAPHY.paragraphLarge};
+  ${TYPOGRAPHY.paragraphLarge};
 `
 const CheckoutPriceContainer = styled.div`
-	display: flex;
-	align-items: center;
-	gap: 9px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
 `

@@ -30,6 +30,7 @@ export const LinkButton: React.FC<LinkButtonProps> = ({href, variant, children, 
 
 const LinkInner = styled.a<{$variant: "primary" | "secondary"}>`
 	text-align: center;
+	display: block;
 	cursor: pointer;
 	background: ${({$variant}) => $variant === "primary" ? APP_COLORS.accent : APP_COLORS.neutral100};
   box-shadow: 0 10px 28px rgba(252, 88, 66, 0.2);

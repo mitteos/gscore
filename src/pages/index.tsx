@@ -1,19 +1,58 @@
-import React from "react"
+import React, {useEffect} from "react"
 import styled from "styled-components"
 import Link from "next/link"
 import { APP_COLORS, TYPOGRAPHY } from "styles"
 import { MainLayout } from "layouts"
 import { CardList } from "components/Card"
 import { HeadComponent } from "components/HeadComponent"
-import {NextPage} from "next";
+import {GetStaticProps, InferGetStaticPropsType, NextPage} from "next"
+import { ProductState } from "store/features/subscription/types"
+import { $query } from "utils/api"
+import { useAppDispatch } from "hooks/redux"
+import { subscriptionActions } from "store/features/subscription"
+import {useRouter} from "next/router";
 
-const Home: NextPage = () => {
+interface HomeProps {
+	allProducts: ProductState[]
+}
+
+export const getStaticProps: GetStaticProps<HomeProps> = async () => {
+	try {
+		const {data} = await $query.get<ProductState[]>("products")
+		return {
+			props: {
+				allProducts: data
+			},
+		}
+	} catch (e) {
+		console.log(e);
+		return {
+			props: {
+				allProducts: []
+			},
+		}
+	}
+}
+
+const Home: NextPage<HomeProps> = ({allProducts}: InferGetStaticPropsType<typeof getStaticProps>) => {
+
+	const dispatch = useAppDispatch()
+	const router = useRouter()
+
+	useEffect(() => {
+		dispatch(subscriptionActions.setProducts(allProducts))
+	}, [])
+
 	return (
 		<MainLayout>
 			<HeadComponent title="Gscore" />
-			<Title>Get started with Gscore today!</Title>
+			<Title>{router.query.changeProductId ? "Change product" : "Get started with Gscore today!"}</Title>
 			<Container>
-				<CardList />
+				<CardList products={
+					router.query.changeProductId
+						? allProducts.filter(product => product.id !== Number(router.query.changeProductId))
+						: allProducts
+				}/>
 				<AdditionTitle>Have more than 10 sites?</AdditionTitle>
 				<AdditionLink>
 					<Link href="/">

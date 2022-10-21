@@ -1,6 +1,7 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit"
 import { UserState } from "./types"
 import { userAsyncActions } from "./"
+import { setCookie } from "cookies-next"
 
 interface InitialState {
 	isLoading: boolean;
@@ -29,6 +30,7 @@ const userSlice = createSlice(({
 				token: action.payload.token,
 				...action.payload.user
 			}
+			setCookie("token", action.payload.token)
 		})
 		builder.addCase(userAsyncActions.register.fulfilled, (state) => {
 			state.isLoading = false

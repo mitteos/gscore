@@ -1,5 +1,5 @@
-import React from "react"
-import {NextPage} from "next"
+import React, {useEffect, useState} from "react"
+import {GetServerSideProps, InferGetServerSidePropsType, NextPage} from "next"
 import {MainLayout} from "layouts"
 import {HeadComponent} from "components/HeadComponent"
 import styled from "styled-components"
@@ -7,28 +7,76 @@ import {APP_COLORS, TYPOGRAPHY} from "styles"
 import {LinkButton} from "components/UI"
 import {CodeList} from "components/Code"
 import {SubscriptionsIsEmpty, SubscriptionsList} from "components/Subscription"
-import {SubscriptionState} from "components/Subscription/types"
-import { withAuth } from "hocs"
+import {useAppSelector} from "hooks/redux"
+import { SubscriptionState } from "store/features/subscription/types"
+import { useRouter } from "next/router"
+import axios from "axios"
+import {getCookie} from "cookies-next"
 
-const subscriptionsCollection: SubscriptionState[] = [
-	{id: 1, name: "Single site license", price: 77, date: "12.09.2022", status: "Active"},
-	{id: 2, name: "3 sites license", price: 177, date: "23.05.2021", status: "Active"},
-	{id: 3, name: "10 sites license", price: 233, date: "02.11.2022", status: "Active"},
-]
+interface SubscriptionsProps {
+	currentSubscriptions: SubscriptionState[]
+}
 
-const Subscriptions: NextPage = () => {
+export const getServerSideProps: GetServerSideProps<SubscriptionsProps> = async ({req, res}) => {
+	const token = getCookie("token", {req, res})
+	try {
+		const {data} = await axios.get<SubscriptionState[]>("https://gscore-back.herokuapp.com/api/subscribe/self", {
+			headers: {
+				Authorization: `Bearer ${token ?? ""}`
+			}
+		})
+		return {
+			props: {
+				currentSubscriptions: data
+			},
+		}
+	} catch (e) {
+		return {
+			props: {
+				currentSubscriptions: []
+			},
+		}
+	}
+}
+
+const Subscriptions: NextPage<SubscriptionsProps> = ({currentSubscriptions}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+
+	const {user: userInfo} = useAppSelector(state => state.user)
+	const router = useRouter()
+	const [activeSubscriptionId, setActiveSubscriptionId] = useState<number>(0)
+
+	useEffect(() => {
+		if(!userInfo?.id) {
+			router.push("/auth")
+		}
+	}, [userInfo])
+
 	return (
 		<MainLayout>
 			<HeadComponent title="Gscore | My subscriptions" />
 			<Container>
 				<Header>
 					<Title>My subscriptions</Title>
-					{!!subscriptionsCollection.length && <HeaderButton href="/" variant="primary">Upgrade</HeaderButton>}
+					{!!currentSubscriptions?.length &&
+							<HeaderButton
+									href={{
+										pathname: "/",
+										query: {
+											changeProductId: `${currentSubscriptions[activeSubscriptionId].productId}`,
+											changeSubscriptionId: `${currentSubscriptions[activeSubscriptionId].id}`
+										}
+									}}
+									variant="primary"
+							>Upgrade</HeaderButton>
+					}
 				</Header>
 			</Container>
-			{subscriptionsCollection.length
+			{currentSubscriptions?.length
 				? <>
-						<SubscriptionsList subscriptionsCollection={subscriptionsCollection}/>
+						<SubscriptionsList
+							subscriptionsCollection={currentSubscriptions}
+							setActiveSubscriptionId={setActiveSubscriptionId}
+						/>
 						<Container>
 							<CodeList />
 						</Container>
@@ -39,7 +87,7 @@ const Subscriptions: NextPage = () => {
 	)
 }
 
-export default withAuth(Subscriptions);
+export default Subscriptions;
 
 const Container = styled.div`
   width: 85%;

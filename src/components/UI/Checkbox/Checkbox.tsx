@@ -1,19 +1,21 @@
 import React, {useState} from "react"
 import styled, {css} from "styled-components"
-import {APP_COLORS} from "styles";
-import Image from "next/image";
-import {SuccessIcon} from "../../../assets/svg";
+import {APP_COLORS} from "styles"
+import Image from "next/image"
+import {SuccessIcon} from "assets/svg"
 
 interface CheckboxProps {
 	isDisabled: boolean;
+	onClick: () => void
 }
 
-export const Checkbox: React.FC<CheckboxProps> = ({isDisabled}) => {
+export const Checkbox: React.FC<CheckboxProps> = ({isDisabled, onClick}) => {
 
 	const [isChecked, setIsChecked] = useState<boolean>(false)
 
 	const checkHandler = () => {
 		!isDisabled && setIsChecked(!isChecked)
+		onClick()
 	}
 
 	return (

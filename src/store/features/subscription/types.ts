@@ -1,3 +1,5 @@
+import { CodeState } from "store/features/code/types"
+
 interface PriceState {
 	id: number;
 	isActive: boolean;
@@ -10,13 +12,6 @@ export interface ProductState {
 	sitesCount: number;
 	name: string;
 	prices: PriceState[]
-}
-
-interface CodeState {
-	id: number;
-	code: string;
-	status: string;
-	subscribeId: number;
 }
 
 export interface SubscriptionState {

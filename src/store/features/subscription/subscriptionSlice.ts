@@ -27,6 +27,9 @@ const subscriptionSlice = createSlice({
 		},
 		setProducts(state, action: PayloadAction<ProductState[]>) {
 			state.allProducts = action.payload
+		},
+		setCurrentSubscriptions(state, action: PayloadAction<SubscriptionState[]>) {
+			state.currentSubscriptions = action.payload
 		}
 	},
 	extraReducers: (builder) => {

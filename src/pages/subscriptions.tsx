@@ -7,14 +7,16 @@ import {APP_COLORS, TYPOGRAPHY} from "styles"
 import {LinkButton} from "components/UI"
 import {CodeList} from "components/Code"
 import {SubscriptionsIsEmpty, SubscriptionsList} from "components/Subscription"
-import {useAppSelector} from "hooks/redux"
+import {useAppDispatch, useAppSelector} from "hooks/redux"
 import { SubscriptionState } from "store/features/subscription/types"
 import { useRouter } from "next/router"
 import axios from "axios"
 import {getCookie} from "cookies-next"
+import {subscriptionActions} from "store/features/subscription"
+import {codeActions} from "store/features/code"
 
 interface SubscriptionsProps {
-	currentSubscriptions: SubscriptionState[]
+	currentSubscriptions: SubscriptionState[];
 }
 
 export const getServerSideProps: GetServerSideProps<SubscriptionsProps> = async ({req, res}) => {
@@ -27,13 +29,13 @@ export const getServerSideProps: GetServerSideProps<SubscriptionsProps> = async 
 		})
 		return {
 			props: {
-				currentSubscriptions: data
+				currentSubscriptions: data,
 			},
 		}
 	} catch (e) {
 		return {
 			props: {
-				currentSubscriptions: []
+				currentSubscriptions: [],
 			},
 		}
 	}
@@ -44,6 +46,12 @@ const Subscriptions: NextPage<SubscriptionsProps> = ({currentSubscriptions}: Inf
 	const {user: userInfo} = useAppSelector(state => state.user)
 	const router = useRouter()
 	const [activeSubscriptionId, setActiveSubscriptionId] = useState<number>(0)
+	const dispatch = useAppDispatch()
+
+	useEffect(() => {
+		dispatch(subscriptionActions.setCurrentSubscriptions(currentSubscriptions))
+		dispatch(codeActions.setCodes(currentSubscriptions[0].codes))
+	}, []);
 
 	useEffect(() => {
 		if(!userInfo?.id) {
@@ -78,7 +86,7 @@ const Subscriptions: NextPage<SubscriptionsProps> = ({currentSubscriptions}: Inf
 							setActiveSubscriptionId={setActiveSubscriptionId}
 						/>
 						<Container>
-							<CodeList />
+							<CodeList subscribeId={currentSubscriptions[activeSubscriptionId].id}/>
 						</Container>
 					</>
 				: <SubscriptionsIsEmpty />

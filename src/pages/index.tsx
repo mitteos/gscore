@@ -5,36 +5,18 @@ import { APP_COLORS, TYPOGRAPHY } from "styles"
 import { MainLayout } from "layouts"
 import { CardList } from "components/Card"
 import { HeadComponent } from "components/HeadComponent"
-import {GetStaticProps, InferGetStaticPropsType, NextPage} from "next"
+import {GetStaticProps, NextPage} from "next"
 import { ProductState } from "store/features/subscription/types"
 import { $query } from "utils/api"
 import { useAppDispatch } from "hooks/redux"
 import { subscriptionActions } from "store/features/subscription"
-import {useRouter} from "next/router";
+import {useRouter} from "next/router"
 
 interface HomeProps {
 	allProducts: ProductState[]
 }
 
-export const getStaticProps: GetStaticProps<HomeProps> = async () => {
-	try {
-		const {data} = await $query.get<ProductState[]>("products")
-		return {
-			props: {
-				allProducts: data
-			},
-		}
-	} catch (e) {
-		console.log(e);
-		return {
-			props: {
-				allProducts: []
-			},
-		}
-	}
-}
-
-const Home: NextPage<HomeProps> = ({allProducts}: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Home: NextPage<HomeProps> = ({allProducts}) => {
 
 	const dispatch = useAppDispatch()
 	const router = useRouter()
@@ -64,6 +46,15 @@ const Home: NextPage<HomeProps> = ({allProducts}: InferGetStaticPropsType<typeof
 	)
 }
 export default Home
+
+export const getStaticProps: GetStaticProps<HomeProps> = async () => {
+	const {data} = await $query.get<ProductState[]>("products")
+	return {
+		props: {
+			allProducts: data
+		},
+	}
+}
 
 const Container = styled.div`
   width: 85%;

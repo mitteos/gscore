@@ -20,16 +20,6 @@ export const SubscriptionItem: React.FC<SubscriptionItemProps> = ({subscriptionI
 	}
 	const {push} = useRouter()
 
-	const viewCodes = () => {
-		push({
-			pathname: "/",
-			query: {
-				changeProductId: subscriptionInfo.product.id,
-				changeSubscriptionId: subscriptionInfo.id
-			}
-		})
-	}
-
 	return (
 		<Container>
 			<ItemHeader>
@@ -47,7 +37,7 @@ export const SubscriptionItem: React.FC<SubscriptionItemProps> = ({subscriptionI
 						<ItemDate>valid until {subscriptionDate.day}.{subscriptionDate.month}.{subscriptionDate.year}</ItemDate>
 					</ItemInfoInner>
 				</ItemInfo>
-				<ItemButton variant="secondary" onClick={viewCodes}>View</ItemButton>
+				<ItemButton variant="secondary">View</ItemButton>
 			</ItemBody>
 		</Container>
 	)

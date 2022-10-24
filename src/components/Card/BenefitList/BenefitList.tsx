@@ -4,11 +4,19 @@ import { BenefitsState } from "components/Card/types"
 import { BenefitItem } from "components/Card"
 
 interface BenefitListProps {
-	benefits: BenefitsState[];
+	sitesCount: number;
 	accent?: boolean;
 }
 
-export const BenefitList: React.FC<BenefitListProps> = ({benefits, accent}) => {
+export const BenefitList: React.FC<BenefitListProps> = ({sitesCount, accent}) => {
+
+	const benefits: BenefitsState[] = [
+		{id: 1, text: sitesCount === 1 ? "Single site license" : `All features for ${sitesCount} sites`},
+		{id: 2, text: "Special introductory pricing"},
+		{id: 3, text: "Unlimited Pages and Keywords"},
+		{id: 4, text: "Billed annually"}
+	]
+
 	return (
 		<ListWrapper>
 			{benefits.map(ben =>
@@ -23,8 +31,8 @@ export const BenefitList: React.FC<BenefitListProps> = ({benefits, accent}) => {
 }
 
 const ListWrapper = styled.div`
-	display: flex;
-	flex-direction: column;
-	gap: 16px;
-	margin: 0 0 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0 0 32px;
 `

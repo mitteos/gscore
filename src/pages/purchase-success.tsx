@@ -3,36 +3,21 @@ import { MainLayout } from "layouts"
 import { HeadComponent } from "components/HeadComponent"
 import styled from "styled-components"
 import { TYPOGRAPHY } from "styles"
-import { Button } from "components/UI"
+import { LinkButton } from "components/UI"
 import { useRouter } from "next/router"
 import { CheckoutList } from "components/Authorization"
 import { CheckoutItemState } from "components/Authorization/types"
-import {NextPage} from "next";
+import { NextPage } from "next"
 
 const PurchaseSuccess: NextPage = () => {
-	
-	const {push} = useRouter()
-	const [checkoutItems, setCheckoutItems] = useState<CheckoutItemState[]>([
-		{id: 1, name: "Single site license", price: 77}
-	])
-	
-	const redirectToSubscriptions = () => {
-		// todo: fix redirect path
-		push("/")
-	}
-	
 	return (
 		<MainLayout>
 			<HeadComponent title="Gscore | Purchase success" />
 			<Container>
 				<Title>Start your subscription</Title>
 				<Subtitle>We have sent you a payment receipt by e-mail and a link to download the plugin with a license key.</Subtitle>
-				<CheckoutList checkoutItems={checkoutItems} success={true}/>
-				<PurchaseButton
-					isLoading={false}
-					variant="primary"
-					onClick={redirectToSubscriptions}
-				>Go to my subscriptions</PurchaseButton>
+				<CheckoutList success={true}/>
+				<PurchaseButton href="/subscriptions" variant="primary">Go to my subscriptions</PurchaseButton>
 			</Container>
 		</MainLayout>
 	)
@@ -63,7 +48,7 @@ const Subtitle = styled.h2`
   ${TYPOGRAPHY.paragraphSmall};
 	margin: 0 0 48px;
 `
-const PurchaseButton = styled(Button)`
+const PurchaseButton = styled(LinkButton)`
 	width: 100%;
 	margin: 48px 0 0;
 `

@@ -22,7 +22,8 @@ const Auth: NextPage = () => {
 		router.push({
 			pathname: "/auth",
 			query: {
-				step: user?.id ? "checkout" : "sign-up"
+				step: user?.id ? "checkout" : "sign-up",
+				...router.query
 			}
 		})
 	}, [user])

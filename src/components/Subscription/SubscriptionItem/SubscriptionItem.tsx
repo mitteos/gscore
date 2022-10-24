@@ -1,29 +1,40 @@
 import React from "react"
-import styled from "styled-components";
+import styled from "styled-components"
 import { APP_COLORS, TYPOGRAPHY } from "styles"
-import { SubscriptionState } from "components/Subscription/types";
-import {Button} from "../../UI";
+import {Button} from "components/UI"
+import { SubscriptionState } from "store/features/subscription/types"
+import {useRouter} from "next/router";
 
 interface SubscriptionItemProps {
-	subscriptionInfo: SubscriptionState
+	subscriptionInfo: SubscriptionState;
 }
 
 export const SubscriptionItem: React.FC<SubscriptionItemProps> = ({subscriptionInfo}) => {
+
+	const subscriptionPrice = subscriptionInfo.product?.prices[0].price
+	const date = new Date(+subscriptionInfo.currentPeriodEnd)
+	const subscriptionDate = {
+		day: date.getDate(),
+		month: date.getMonth() + 1,
+		year: date.getFullYear()
+	}
+	const {push} = useRouter()
+
 	return (
 		<Container>
 			<ItemHeader>
 				<ItemLogo>Gscore</ItemLogo>
-				<ItemStatus $status={subscriptionInfo.status}>{subscriptionInfo.status}</ItemStatus>
+				<ItemStatus $status={subscriptionInfo?.status}>{subscriptionInfo?.status?.toLowerCase()}</ItemStatus>
 			</ItemHeader>
 			<ItemLine />
 			<ItemBody>
 				<ItemInfo>
 					<ItemInfoInner>
-						<ItemName>{subscriptionInfo.name}</ItemName>
-						<ItemPrice>${subscriptionInfo.price}</ItemPrice>
+						<ItemName>{subscriptionInfo.product?.name}</ItemName>
+						<ItemPrice>${subscriptionPrice}</ItemPrice>
 					</ItemInfoInner>
 					<ItemInfoInner>
-						<ItemDate>valid until {subscriptionInfo.date}</ItemDate>
+						<ItemDate>valid until {subscriptionDate.day}.{subscriptionDate.month}.{subscriptionDate.year}</ItemDate>
 					</ItemInfoInner>
 				</ItemInfo>
 				<ItemButton variant="secondary">View</ItemButton>
@@ -55,11 +66,12 @@ const ItemLogo = styled.h1`
     ${TYPOGRAPHY.single300Medium};
   }
 `
-const ItemStatus = styled.h2<{$status: "Active" | "Inactive" | "Hold"}>`
+const ItemStatus = styled.h2<{$status: string}>`
   ${TYPOGRAPHY.headings4};
-  color: ${({$status}) => $status === "Active"
+	text-transform: capitalize;
+  color: ${({$status}) => $status === "ACTIVE"
           ? APP_COLORS.green
-          : $status === "Inactive"
+          : $status === "INACTIVE"
                   ? APP_COLORS.red300
                   : APP_COLORS.orange300};
   @media (max-width: 600px) {

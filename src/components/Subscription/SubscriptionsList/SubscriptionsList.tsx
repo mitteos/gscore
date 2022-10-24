@@ -1,23 +1,27 @@
-import React from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
 import { Swiper, SwiperSlide } from "swiper/react"
 import {Navigation, Pagination} from "swiper"
 import "swiper/css"
 import "swiper/css/pagination"
 import "swiper/css/navigation"
-import { SubscriptionState } from "components/Subscription/types"
 import { SubscriptionItem } from "components/Subscription"
 import { SliderButton } from "components/UI"
-import {APP_COLORS, TYPOGRAPHY} from "styles";
+import { APP_COLORS, TYPOGRAPHY } from "styles"
+import { SubscriptionState } from "store/features/subscription/types"
 
 interface SubscriptionsListProps {
-	subscriptionsCollection: SubscriptionState[]
+	subscriptionsCollection: SubscriptionState[];
+	setActiveSubscriptionId: (e: number) => void;
 }
 
-export const SubscriptionsList: React.FC<SubscriptionsListProps> = ({subscriptionsCollection}) => {
+export const SubscriptionsList: React.FC<SubscriptionsListProps> = ({subscriptionsCollection, setActiveSubscriptionId}) => {
 	return (
 		<Container>
 			<Slider
+				onSlideChange={(slide) => {
+					setActiveSubscriptionId(slide.activeIndex)
+				}}
 				spaceBetween={28}
 				slidesPerView="auto"
 				centeredSlidesBounds={true}
@@ -38,7 +42,7 @@ export const SubscriptionsList: React.FC<SubscriptionsListProps> = ({subscriptio
 						<SubscriptionItem subscriptionInfo={sub} />
 					</SwiperSlide>
 				)}
-				<NavigationContainer>
+				<NavigationContainer $visibility={subscriptionsCollection.length > 1}>
 					<SliderButton variant="prev" className="slider-button-prev"/>
 					<NavigationFraction className="fractions"/>
 					<SliderButton variant="next" className="slider-button-next"/>
@@ -68,9 +72,9 @@ const Slider = styled(Swiper)`
 		opacity: 1;
 	}
 `
-const NavigationContainer = styled.div`
-	display: flex;
-	align-items: center;
+const NavigationContainer = styled.div<{$visibility: boolean}>`
+  display: ${({$visibility}) => $visibility ? "flex" : "none"};
+  align-items: center;
 	gap: 12px;
 	margin: 24px 0 0;
 	.swiper-button-disabled {

@@ -1,31 +1,48 @@
 import React from "react"
 import styled from "styled-components"
 import { APP_COLORS, TYPOGRAPHY } from "styles"
-import { CardState } from "components/Card/types"
 import { BenefitList } from "components/Card"
 import Link from "next/link"
+import { ProductState } from "store/features/subscription/types"
+import { useAppDispatch } from "hooks/redux"
+import { subscriptionActions } from "store/features/subscription"
+import {useRouter} from "next/router";
 
 interface CardItemStyles {
 	accent?: boolean
 }
 interface CardItemProps extends CardItemStyles{
-	cardInfo: CardState
+	productInfo: ProductState
 }
 
-export const CardItem: React.FC<CardItemProps> = ({accent, cardInfo}) => {
+export const CardItem: React.FC<CardItemProps> = ({accent, productInfo}) => {
+
+	const router = useRouter()
+	const dispatch = useAppDispatch()
+	const selectProduct = () => {
+		dispatch(subscriptionActions.setSelectedProduct(productInfo.prices[0].id))
+	}
+
 	return (
 		<CardWrapper accent={accent}>
-			<CardPrice>${cardInfo.price}</CardPrice>
-			<CardTitle>{cardInfo.title}</CardTitle>
-			<CardDescription>{cardInfo.description}</CardDescription>
+			<CardPrice>${productInfo.prices[0].price}</CardPrice>
+			<CardTitle>{productInfo.name}</CardTitle>
+			<CardDescription>Get the advanced WordPress plugin that optimizes content with GSC keywords at one low annual price</CardDescription>
 			<CardLine accent={accent}/>
 			<BenefitList
-				benefits={cardInfo.benefits}
+				sitesCount={productInfo.sitesCount}
 				accent={accent}
 			/>
-			<Link href="/auth">
-				<CardButton accent={accent}>Get Gscore</CardButton>
-			</Link>
+			<CardButton href={{
+				pathname: "/auth",
+				query: {
+					changeProductId: router.query.changeProductId,
+					changeSubscriptionId: router.query.changeSubscriptionId
+				}
+
+			}}>
+				<CardButtonInner accent={accent} onClick={selectProduct}>Get Gscore</CardButtonInner>
+			</CardButton>
 		</CardWrapper>
 	)
 }
@@ -56,15 +73,15 @@ const CardWrapper = styled.div<CardItemStyles>`
   }
 `
 const CardPrice = styled.h1`
-	text-align: center;
+  text-align: center;
   ${TYPOGRAPHY.headings1}
-	margin: 0 0 4px;
-	@media (max-width: 1200px) {
+  margin: 0 0 4px;
+  @media (max-width: 1200px) {
     ${TYPOGRAPHY.headings2}
   }
 `
 const CardTitle = styled.h2`
-	text-align: center;
+  text-align: center;
   ${TYPOGRAPHY.single400Bold}
   margin: 0 0 8px;
   @media (max-width: 1200px) {
@@ -72,25 +89,28 @@ const CardTitle = styled.h2`
   }
 `
 const CardDescription = styled.p`
-	text-align: center;
+  text-align: center;
   ${TYPOGRAPHY.paragraphDefault};
   @media (max-width: 1200px) {
-  	${TYPOGRAPHY.paragraphSmall}
-	}
+    ${TYPOGRAPHY.paragraphSmall}
+  }
 `
 const CardLine = styled.div<CardItemStyles>`
   border: 1px solid ${({accent}) => accent === true ? "#ffffff" : "#969696"};
-	width: 100%;
-	margin: 40px 0 38px;
+  width: 100%;
+  margin: 40px 0 38px;
 `
-
-const CardButton = styled.div<CardItemStyles>`
-	width: 100%;
+const CardButton = styled(Link)`
+  width: 100%;
+`
+const CardButtonInner = styled.a<CardItemStyles>`
+  width: 100%;
+  display: block;
   ${TYPOGRAPHY.single200Bold}
   padding: 26px 0;
-	background: #ffffff;
-	border-radius: 6px;
-	color: ${({accent}) => accent ? APP_COLORS.accent : APP_COLORS.neutral800};
-	text-align: center;
-	cursor: pointer;
+  background: #ffffff;
+  border-radius: 6px;
+  color: ${({accent}) => accent ? APP_COLORS.accent : APP_COLORS.neutral800};
+  text-align: center;
+  cursor: pointer;
 `

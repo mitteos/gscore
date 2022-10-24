@@ -35,7 +35,7 @@ export const CardItem: React.FC<CardItemProps> = ({accent, productInfo}) => {
 			/>
 			<CardButton href={{
 				pathname: "/auth",
-				query: router.query.changeProductId && {
+				query: {
 					changeProductId: router.query.changeProductId,
 					changeSubscriptionId: router.query.changeSubscriptionId
 				}

@@ -1,47 +1,57 @@
-import React, {useState} from "react"
+import React from "react"
 import styled, {css} from "styled-components"
 import { APP_COLORS, TYPOGRAPHY } from "styles"
 import { Checkbox, Button } from "components/UI"
-import { CodeState } from "components/Code/types"
 import Image from "next/image"
 import { CopyIcon } from "assets/svg"
-import {SubmitHandler, useForm} from "react-hook-form";
+import {SubmitHandler, useForm} from "react-hook-form"
+import {CodeState} from "store/features/code/types"
+import {useAppDispatch, useAppSelector} from "hooks/redux"
+import { codeAsyncActions } from "store/features/code"
 
 interface CodeItemProps {
 	codeInfo: CodeState
+	setSelectedManageIds: (e: number[]) => void;
+	selectedManageIds: number[]
 }
 
 interface CodeInputs {
-	domain: string;
+	origin: string;
 }
 
-export const CodeItem: React.FC<CodeItemProps> = ({codeInfo}) => {
+export const CodeItem: React.FC<CodeItemProps> = ({codeInfo, setSelectedManageIds, selectedManageIds}) => {
 
-	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const {isLoading} = useAppSelector(state => state.code)
+	const dispatch = useAppDispatch()
 	const {register, handleSubmit} = useForm<CodeInputs>({
 		defaultValues: {
-			domain: codeInfo.domain
+			origin: codeInfo.origin ?? ""
 		}
 	})
 
-	const activateCode: SubmitHandler<CodeInputs> = (data) => {
-		setIsLoading(true)
-		setTimeout(() => {
-			alert(JSON.stringify(data))
-			setIsLoading(false)
-		}, 3000)
+	const activateCode: SubmitHandler<CodeInputs> = (formFields) => {
+		const {origin} = formFields
+		dispatch(codeAsyncActions.activate({origin, code: codeInfo.code}))
 	}
+
 	const copyCodeToClipboard = () => {
 		navigator.clipboard.writeText(codeInfo.code)
 	}
 
+	const changeSelectedIds = () => {
+		setSelectedManageIds(selectedManageIds.includes(codeInfo.id)
+			? selectedManageIds.filter(id => id !== codeInfo.id)
+			: [...selectedManageIds, codeInfo.id]
+		)
+	}
+
 	return (
 		<Container
-			$isActivated={codeInfo.status !== "Inactive"}
+			$isActivated={codeInfo.status !== "INACTIVE"}
 			onSubmit={handleSubmit(activateCode)}
 		>
 			<CheckContainer>
-				<Checkbox isDisabled={false} />
+				<Checkbox onClick={changeSelectedIds} isDisabled={codeInfo.status !== "HOLD"} />
 			</CheckContainer>
 			<CodeColumn>
 				<ColumnTitle>License code</ColumnTitle>
@@ -56,12 +66,12 @@ export const CodeItem: React.FC<CodeItemProps> = ({codeInfo}) => {
 				<ColumnTitle>Domain</ColumnTitle>
 				<CodeInputContainer>
 					<CodeInputInner
-						disabled={codeInfo.status !== "Inactive"}
-						{...register("domain", {required: true})}
+						disabled={codeInfo.status !== "INACTIVE"}
+						{...register("origin", {required: true})}
 					/>
 				</CodeInputContainer>
 			</DomainColumn>
-			{codeInfo.status === "Inactive" &&
+			{codeInfo.status === "INACTIVE" &&
           <ActivateButtonContainer>
               <ActivateButtonInner
 									variant="secondary"
@@ -72,7 +82,7 @@ export const CodeItem: React.FC<CodeItemProps> = ({codeInfo}) => {
 			<StatusColumn>
 				<StatusTitle>Status</StatusTitle>
 				<StatusWrapper>
-					<StatusValue $status={codeInfo.status}>{codeInfo.status}</StatusValue>
+					<StatusValue $status={codeInfo.status}>{codeInfo.status.toLowerCase()}</StatusValue>
 				</StatusWrapper>
 			</StatusColumn>
 		</Container>
@@ -194,11 +204,12 @@ const StatusTitle = styled(ColumnTitle)`
 		display: none;
 	}
 `
-const StatusValue = styled.h1<{$status: "Active" | "Inactive" | "Hold"}>`
+const StatusValue = styled.h1<{$status: string}>`
 	${TYPOGRAPHY.headings4};
-	color: ${({$status}) => $status === "Active" 
+	text-transform: capitalize;
+	color: ${({$status}) => $status === "ACTIVE" 
 					? APP_COLORS.green 
-					: $status === "Inactive" 
+					: $status === "INACTIVE" 
 									? APP_COLORS.red300 
 									: APP_COLORS.orange300};
 `

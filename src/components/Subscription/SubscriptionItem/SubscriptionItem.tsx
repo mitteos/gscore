@@ -3,7 +3,8 @@ import styled from "styled-components"
 import { APP_COLORS, TYPOGRAPHY } from "styles"
 import {Button} from "components/UI"
 import { SubscriptionState } from "store/features/subscription/types"
-import {useRouter} from "next/router";
+import {useAppDispatch} from "hooks/redux"
+import { codeActions } from "store/features/code"
 
 interface SubscriptionItemProps {
 	subscriptionInfo: SubscriptionState;
@@ -12,13 +13,17 @@ interface SubscriptionItemProps {
 export const SubscriptionItem: React.FC<SubscriptionItemProps> = ({subscriptionInfo}) => {
 
 	const subscriptionPrice = subscriptionInfo.product?.prices[0].price
+	const dispatch = useAppDispatch()
 	const date = new Date(+subscriptionInfo.currentPeriodEnd)
 	const subscriptionDate = {
 		day: date.getDate(),
 		month: date.getMonth() + 1,
 		year: date.getFullYear()
 	}
-	const {push} = useRouter()
+
+	const viewCodes = () => {
+		dispatch(codeActions.setCodes(subscriptionInfo.codes))
+	}
 
 	return (
 		<Container>
@@ -37,7 +42,7 @@ export const SubscriptionItem: React.FC<SubscriptionItemProps> = ({subscriptionI
 						<ItemDate>valid until {subscriptionDate.day}.{subscriptionDate.month}.{subscriptionDate.year}</ItemDate>
 					</ItemInfoInner>
 				</ItemInfo>
-				<ItemButton variant="secondary">View</ItemButton>
+				<ItemButton variant="secondary" onClick={viewCodes}>View</ItemButton>
 			</ItemBody>
 		</Container>
 	)

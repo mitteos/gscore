@@ -1,27 +1,51 @@
-import React from "react"
+import React, {useEffect, useState } from "react"
 import styled from "styled-components"
-import {CodeState} from "components/Code/types"
 import {CodeItem} from "components/Code"
-import {TYPOGRAPHY} from "../../../styles";
-import {Button} from "components/UI";
+import {TYPOGRAPHY} from "styles"
+import {Button} from "components/UI"
+import {useAppDispatch, useAppSelector} from "hooks/redux"
+import { codeAsyncActions } from "store/features/code"
 
-const codes: CodeState[] = [
-	{id: 1, code: "asdasdasgasgwa41241gwagawgawfawfawfawfawfwa", domain: "https://vk.com", status: "Active"},
-	{id: 2, code: "gwag33s4y4sgs46", domain: "https://vk.com", status: "Inactive"},
-	{id: 3, code: "6gs36gs3g6s3g6s3b6s363s", domain: "https://vk.com", status: "Hold"},
-	{id: 4, code: "aseghsehsehsehsehsehseh", domain: "", status: "Inactive"},
-]
+interface CodeListProps {
+	subscribeId: number
+}
 
-export const CodeList: React.FC = () => {
+export const CodeList: React.FC<CodeListProps> = ({subscribeId}) => {
+
+	const {codes, isLoading} = useAppSelector(state => state.code)
+	const [isEditMode, setIsEditMode] = useState<boolean>(!!codes.find(code => code.status === "HOLD"))
+	const [selectedManageIds, setSelectedManageIds] = useState<number[]>([])
+	const dispatch = useAppDispatch()
+
+	const manageCodes = () => {
+		dispatch(codeAsyncActions.manage({codesIds: selectedManageIds, subscribeId}))
+		setSelectedManageIds([])
+	}
+
+	useEffect(() => {
+		setIsEditMode(!!codes.find(code => code.status === "HOLD"))
+	}, [codes])
+
 	return (
 		<Container>
 			<CodeWrapper>
 				{codes.map(code =>
-					<CodeItem key={code.id} codeInfo={code} />
+					<CodeItem
+						key={code.id}
+						codeInfo={code}
+						setSelectedManageIds={setSelectedManageIds}
+						selectedManageIds={selectedManageIds}
+					/>
 				)}
 			</CodeWrapper>
-			<SelectTitle>Select the domains you want to keep</SelectTitle>
-			<SelectButton variant="primary">Confirm</SelectButton>
+			{isEditMode && <SelectTitle>Select the domains you want to keep</SelectTitle>}
+			{isEditMode &&
+					<SelectButton
+						onClick={manageCodes}
+						isLoading={isLoading}
+						variant="primary"
+					>Confirm</SelectButton>
+			}
 		</Container>
 	);
 };

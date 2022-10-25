@@ -10,12 +10,13 @@ import {
 } from "redux-persist"
 import storage from "redux-persist/lib/storage"
 import { configureStore, combineReducers } from "@reduxjs/toolkit"
-import { userReducer, subscriptionReducer } from "store/features"
+import {userReducer, subscriptionReducer, codeReducer} from "store/features"
 
 
 const rootReducer = combineReducers({
 	user: userReducer,
-	subscriptions: subscriptionReducer
+	subscriptions: subscriptionReducer,
+	code: codeReducer
 })
 
 const persistConfig = {

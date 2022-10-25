@@ -7,11 +7,13 @@ import {APP_COLORS, TYPOGRAPHY} from "styles"
 import {LinkButton} from "components/UI"
 import {CodeList} from "components/Code"
 import {SubscriptionsIsEmpty, SubscriptionsList} from "components/Subscription"
-import {useAppSelector} from "hooks/redux"
+import {useAppDispatch, useAppSelector} from "hooks/redux"
 import { SubscriptionState } from "store/features/subscription/types"
 import { useRouter } from "next/router"
 import axios, { AxiosError } from "axios"
 import {getCookie} from "cookies-next"
+import {subscriptionActions} from "store/features/subscription"
+import {codeActions} from "store/features/code"
 
 interface SubscriptionsProps {
 	currentSubscriptions: SubscriptionState[]
@@ -49,6 +51,12 @@ const Subscriptions: NextPage<SubscriptionsProps> = ({currentSubscriptions, erro
 	const {user: userInfo} = useAppSelector(state => state.user)
 	const router = useRouter()
 	const [activeSubscriptionId, setActiveSubscriptionId] = useState<number>(0)
+	const dispatch = useAppDispatch()
+
+	useEffect(() => {
+		dispatch(subscriptionActions.setCurrentSubscriptions(currentSubscriptions))
+		dispatch(codeActions.setCodes(currentSubscriptions[0].codes))
+	}, []);
 
 	useEffect(() => {
 		if(!userInfo?.id) {
@@ -83,7 +91,7 @@ const Subscriptions: NextPage<SubscriptionsProps> = ({currentSubscriptions, erro
 							setActiveSubscriptionId={setActiveSubscriptionId}
 						/>
 						<Container>
-							<CodeList />
+							<CodeList subscribeId={currentSubscriptions[activeSubscriptionId].id}/>
 						</Container>
 					</>
 				: error

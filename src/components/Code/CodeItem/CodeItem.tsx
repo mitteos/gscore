@@ -23,7 +23,7 @@ export const CodeItem: React.FC<CodeItemProps> = ({codeInfo, setSelectedManageId
 
 	const {isLoading} = useAppSelector(state => state.code)
 	const dispatch = useAppDispatch()
-	const {register, handleSubmit} = useForm<CodeInputs>({
+	const {register, handleSubmit, formState: {errors}} = useForm<CodeInputs>({
 		defaultValues: {
 			origin: codeInfo.origin ?? ""
 		}
@@ -66,6 +66,7 @@ export const CodeItem: React.FC<CodeItemProps> = ({codeInfo, setSelectedManageId
 				<ColumnTitle>Domain</ColumnTitle>
 				<CodeInputContainer>
 					<CodeInputInner
+						$isInvalid={!!errors.origin}
 						disabled={codeInfo.status !== "INACTIVE"}
 						{...register("origin", {required: true})}
 					/>
@@ -89,7 +90,7 @@ export const CodeItem: React.FC<CodeItemProps> = ({codeInfo, setSelectedManageId
 	);
 };
 
-const Container = styled.form<{$isActivated: boolean}>`
+const Container = styled.form<{$isActivated?: boolean}>`
 	position: relative;
 	width: 100%;
 	display: grid;
@@ -167,14 +168,15 @@ const CodeInputContainer = styled.div`
 	width: 100%;
   box-shadow: 0 2px 12px rgba(20, 20, 43, 0.06);
 `
-const CodeInputInner = styled.input`
+const CodeInputInner = styled.input<{$isInvalid?: boolean}>`
   background: #393939;
   border-radius: 6px;
 	padding: 25px 70px 25px 24px;
 	outline: none;
-	border: none;
 	width: 100%;
   color: #969696;
+	transition: all .3s ease;
+	border: 1px solid ${({$isInvalid}) => $isInvalid ? APP_COLORS.red300 : "#393939"};
 `
 const CodeInputCopy = styled.div`
   position: absolute;

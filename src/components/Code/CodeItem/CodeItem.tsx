@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState} from "react"
 import styled, {css} from "styled-components"
 import { APP_COLORS, TYPOGRAPHY } from "styles"
 import { Checkbox, Button } from "components/UI"
@@ -6,7 +6,7 @@ import Image from "next/image"
 import { CopyIcon } from "assets/svg"
 import {SubmitHandler, useForm} from "react-hook-form"
 import {CodeState} from "store/features/code/types"
-import {useAppDispatch, useAppSelector} from "hooks/redux"
+import {useAppDispatch} from "hooks/redux"
 import { codeAsyncActions } from "store/features/code"
 
 interface CodeItemProps {
@@ -21,7 +21,7 @@ interface CodeInputs {
 
 export const CodeItem: React.FC<CodeItemProps> = ({codeInfo, setSelectedManageIds, selectedManageIds}) => {
 
-	const {isLoading} = useAppSelector(state => state.code)
+	const [isLoading, setIsLoading] = useState<boolean>(false)
 	const dispatch = useAppDispatch()
 	const {register, handleSubmit, formState: {errors}} = useForm<CodeInputs>({
 		defaultValues: {
@@ -30,8 +30,12 @@ export const CodeItem: React.FC<CodeItemProps> = ({codeInfo, setSelectedManageId
 	})
 
 	const activateCode: SubmitHandler<CodeInputs> = (formFields) => {
+		setIsLoading(true)
 		const {origin} = formFields
 		dispatch(codeAsyncActions.activate({origin, code: codeInfo.code}))
+			.then(() => {
+				setIsLoading(false)
+			})
 	}
 
 	const copyCodeToClipboard = () => {

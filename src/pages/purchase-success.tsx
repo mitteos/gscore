@@ -1,12 +1,10 @@
-import React, { useState } from "react"
+import React from "react"
 import { MainLayout } from "layouts"
 import { HeadComponent } from "components/HeadComponent"
 import styled from "styled-components"
 import { TYPOGRAPHY } from "styles"
 import { LinkButton } from "components/UI"
-import { useRouter } from "next/router"
 import { CheckoutList } from "components/Authorization"
-import { CheckoutItemState } from "components/Authorization/types"
 import { NextPage } from "next"
 
 const PurchaseSuccess: NextPage = () => {
